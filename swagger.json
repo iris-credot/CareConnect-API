@@ -1,0 +1,2365 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "CareConnect-API",
+      "description": "CareConnect-API",
+      "version": "1.0.0"
+    },
+    "schemes": ["http", "https"],
+    "securityDefinitions":{
+      "Bearer":{
+       "type":"apiKey",
+       "name":"Authorization",
+       "in":"header",
+       "description":"Enter the token for Authorization"
+      }
+      },
+    "paths": {
+      "/api/patient/create": {
+        "post": {
+          "summary": "Create a Patient Account",
+          "description": "Create a Patient Account",
+          "tags": ["Patient"],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Patient"
+              },
+              "required": true,
+              "description": "Patient object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Patient created"
+            }
+          }
+        }
+      },
+      "/api/appointment/create": {
+        "post": {
+          "summary": "Create an Appointment Details",
+          "description": "Create a Appointment  Details",
+          "tags": ["Appointments"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Appointments"
+              },
+              "required": true,
+              "description": "Appointment  object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Appointments  created"
+            }
+          }
+        }
+      },
+      "/api/health/create": {
+        "post": {
+          "summary": "Create a Health Application",
+          "description": "Create a Health Application",
+          "tags": ["Health-Patient"],
+          "consumes": ["multipart/form-data"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters": [
+    {
+      "name": "Patient",
+      "in": "formData",
+      "type": "string",
+      "description": "The ObjectId of the patientId to which the patient belongs",
+      "example": "609879f16836050e184a0db3",
+      "required": true
+    },
+    {
+      "name": "chronicDiseases",
+      "in": "formData",
+      "type": "string",
+      "description": "Full Name of the  patient who requesting the loan"
+    },
+    {
+      "name": "allergies",
+      "in": "formData",
+      "type": "string",
+      "description": "Email of  patient who requesting the loan"
+    },
+    {
+      "name": "medications",
+      "in": "formData",
+      "type": "string",
+      "description": "ID of  patient who requesting the loan"
+    },
+    {
+      "name": "surgeries",
+      "in": "formData",
+      "type": "date",
+      "description": "Phone Number of  patient who requesting the loan"
+    },
+    {
+      "name": "familyHistory",
+      "in": "formData",
+      "type": "string",
+      "description": "History of patient who requesting the loan"
+    },
+    {
+      "name": "lifestyle",
+      "in": "formData",
+      "type": "string",
+      "description": "Lifestyle of where  patient work"
+    }
+
+  ],
+         
+          "responses": {
+            "201": {
+              "description": "Health created"
+            }
+          }
+        }
+      }, 
+      "/api/chat/create": {
+        "post": {
+          "summary": "Create a Send chat",
+          "description": "Create a Send message",
+          "tags": ["Chats-Messages"],
+          "consumes": ["multipart/form-data"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters": [
+    {
+        "name": "User",
+        "in": "formData",
+        "type": "string",
+        "description": "ID patient who is sending message"
+      },
+      {
+        "name": "messages",
+        "in": "formData",
+        "type": "string",
+        "description": "Main reason of send message"
+      }
+  
+  
+  ],
+         
+          "responses": {
+            "201": {
+              "description": "Message sended successfully"
+            }
+          }
+        }
+      },
+      "/api/chat/message/{chatId}": {
+        "post": {
+          "summary": "Create a message",
+          "description": "Create a message",
+          "tags": ["Chats-Messages"],
+          "consumes": ["multipart/form-data"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[  {
+    "name": "sender",
+    "in": "formData",
+    "type": "string",
+    "description": "ID patient who is sending message"
+  },
+  {
+    "name": "message",
+    "in": "formData",
+    "type": "string",
+    "description": "Main reason of send message"
+  },
+  {
+    "name": "sentAt",
+    "in": "formData",
+    "type": "date",
+    "description": "message"
+  },
+  {
+      "name": "isRead",
+      "in": "formData",
+      "type": "boolean",
+      "description": "message"
+    }
+      ],
+         
+          "responses": {
+            "201": {
+              "description": "Chat created"
+            }
+          }
+        }
+      },
+      "/api/feedback/create": {
+        "post": {
+          "summary": "Create a feedback",
+          "description": "Create feedback",
+          "tags": ["Feedbacks"],
+          "consumes": ["multipart/form-data"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[{
+    "name":"sender",
+    "in":"path",
+    "description":"ID of the message to send reply",
+    "required":"true",
+    "type":"string"
+    },
+      {
+        "name": "receiver",
+        "in": "formData",
+        "type": "string",
+        "description": "The id message  "
+      },
+      {
+        "name": "feedbackText",
+        "in": "formData",
+        "type": "string",
+        "description": "The  message  "
+      },
+      {
+        "name": "rating",
+        "in": "formData",
+        "type": "number",
+        "description": "The number message  "
+      },
+      {
+        "name": "status",
+        "in": "formData",
+        "type": "string",
+        "enum":"'pending', 'resolved'",
+        "description": "The id message  "
+      }
+     
+     
+      ],
+         
+          "responses": {
+            "201": {
+              "description": "Feedback send successfully"
+            }
+          }
+        }
+      },
+      "/api/user/signup": {
+        "post": {
+          "summary": "Create a User Account",
+          "description": "Create a User Account",
+          "tags": ["User"],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/User"
+              },
+              "required": true,
+              "description": "User object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User created"
+            }
+          }
+        }
+      },
+      "/api/doctor/create": {
+        "post": {
+          "summary": "Create a Doctor Account",
+          "description": "Create a Doctor Account",
+          "tags": ["Doctor"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Doctor"
+              },
+              "required": true,
+              "description": "Doctor object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Doctor created"
+            }
+          }
+        }
+      },
+      "/api/report/create": {
+        "post": {
+          "summary": "Create a Report",
+          "description": "Create a Report",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Reports"
+              },
+              "required": true,
+              "description": "Doctor object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Doctor created"
+            }
+          }
+        }
+      },
+      "/api/user/login": {
+        "post": {
+          "summary": "Login",
+          "description": "Login",
+          "tags": ["Authentication"],
+          "parameters":[{
+            "name":"body",
+            "in":"body",
+            "description":"Teacher details",
+            "required":"true",
+            "schema":{
+                "type":"object",
+                "properties":{
+                    "email":{
+                   "type": "string",
+                    "required": [true,"Please provide email first"],
+                    "unique": "true",
+                    "lowercase": "true"
+                    },
+                   "password":{
+                    "type": "string",
+                    "required": [true,"Please provide password first"],
+                    "minLength": [8,"Must be at least 8 characters"]
+                    }
+                      
+                }
+            }
+        }],
+          "responses": {
+            "201": {
+              "description": "User Logged In"
+            }
+          }
+        }
+      },
+    
+      "/api/user/verifyotp": {
+        "post": {
+          "summary": "Verify Account",
+          "description": "Verify Account",
+          "tags": ["Authentication"],
+          "parameters":[{
+            "name":"body",
+            "in":"body",
+            "description":"User details",
+            "required":"true",
+            "schema":{
+              "type":"object",
+              "properties":{
+                  "otp":{
+                 "type": "string",
+                  "required": [true,"Please provide otp"]
+                  }                    
+              }
+          }
+      }],
+          "responses": {
+            "201": {
+              "description": "User Account Verified!"
+            }
+          }
+        }
+      },
+      "/api/user/forgot": {
+        "post": {
+          "summary": "Forgot Password",
+          "description": "Forgot Password",
+          "tags": ["User"],
+          
+          "parameters":[{
+            "name":"body",
+            "in":"body",
+            "description":"User email if forgot password",
+            "required":"true",
+            "schema":{
+                "type":"object",
+                "properties":{
+                    "email":{
+                   "type": "string",
+                    "required": [true,"Please provide email first"],
+                    "unique": "true",
+                    "lowercase": "true"
+                    }
+                    
+                      
+                }
+            }
+        }],
+          "responses": {
+            "201": {
+              "description": "We sent you an email to reset your password"
+            }
+          }
+        }
+      },
+      "/api/user/resetpassword/{token}": {
+        "post": {
+          "summary": "Reset Password",
+          "description": "Reset Password",
+          "tags": ["Authentication"],
+          "parameters":[{
+            "name":"body",
+            "in":"body",
+            "description":"User details",
+            "required":"true",
+            "schema":{
+                "type":"object",
+                "properties":{
+                    "email":{
+                   "type": "string",
+                    "required": [true,"Please provide email first"],
+                    "unique": "true",
+                    "lowercase": "true"
+                    },
+                   "newPassword":{
+                    "type": "string",
+                    "required": [true,"Please provide password first"],
+                    "minLength": [8,"Must be at least 8 characters"]
+                    },
+                    "confirm":{
+                      "required": [true,"Please provide password first"],
+                    "minLength": [8,"Must be at least 8 characters"]
+                    }
+                      
+                }
+            }
+        }],
+          "responses": {
+            "201": {
+              "description": "Password Reseted"
+            }
+          }
+        }
+      },
+      "/api/user/logout": {
+        "post": {
+          "summary": "Logout",
+          "description": "Logout",
+          "tags": ["User"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+          
+              "required": true,
+              "description": "User object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Logout"
+            }
+          }
+        }
+      },
+      "/api/patient/all": {
+        "get": {
+          "summary": "List all Patient Account",
+          "description": "List of Patient Account",
+          "tags": ["Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "responses": {
+            "201": {
+              "description": "List of Patient Account"
+            }
+          }
+        }
+      },
+      "/api/appointment/all": {
+        "get": {
+          "summary": "List all Appointments",
+          "description": "List of Appointments",
+          "tags": ["Appointments"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "responses": {
+            "201": {
+              "description": "List of Appointments"
+            }
+          }
+        }
+      },
+      "/api/health/all": {
+        "get": {
+          "summary": "List all Health Applications",
+          "description": "List of Health Applications",
+          "tags": ["Health-Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "responses": {
+            "201": {
+              "description": "List of Health Applications"
+            }
+          }
+        }
+      },
+      "/api/doctor/all": {
+        "get": {
+          "summary": "List all Doctors",
+          "description": "List of Doctors",
+          "tags": ["Doctor"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "responses": {
+            "201": {
+              "description": "List of Doctors"
+            }
+          }
+        }
+      },
+      "/api/report/all": {
+        "get": {
+          "summary": "List all Reports",
+          "description": "List of Reports",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "responses": {
+            "201": {
+              "description": "List of Reports"
+            }
+          }
+        }
+      },
+      "/api/user/all": {
+        "get": {
+          "summary": "List all User Account",
+          "description": "List of User Account",
+          "tags": ["User"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/User"
+              },
+              "required": true,
+              "description": "User object"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "List of User Account"
+            }
+          }
+        }
+      },
+      "/api/patient/getPatient/{id}": { 
+        "get": {
+          "summary": "Get Patient Account by Id",
+          "description": "Get Patient Account by Id",
+          "tags": ["Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Patient to retrieve",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Patient Account"
+            }
+          }
+        }
+      },
+      "/api/patient/getPatientByUser/{id}": { 
+        "get": {
+          "summary": "Get Patient Account by User Id",
+          "description": "Get Patient Account by User Id",
+          "tags": ["Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Patient to retrieve",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Patient Account"
+            }
+          }
+        }
+      },
+      "/api/appointment/get/{id}": {
+        "get": {
+          "summary": "Get Appointment by Id",
+          "description": "Get Appointment  by Id",
+          "tags": ["Appointments"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the appointment to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Appointment Details"
+            }
+          }
+        }
+      },
+      "/api/chat/{chatId}": {
+        "get": {
+          "summary": "Get Chats by Id",
+          "description": "Get Chats by Id",
+          "tags": ["Chats-Messages"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the chat to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "chat Application"
+            }
+          }
+        }
+      },
+      "/api/chat/user/{userId}": {
+        "get": {
+          "summary": "Get UserChat by Id",
+          "description": "Get Message by Id",
+          "tags": ["Chats-Messages"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the message to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "message"
+            }
+          }
+        }
+      },
+      "/api/doctor/getdoctor/{id}": {
+        "get": {
+          "summary": "Get Doctor by Id",
+          "description": "Get Doctor Id",
+          "tags": ["Doctor"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the doctor to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "doctor"
+            }
+          }
+        }
+      },
+      "/api/doctor/getDoctorPatients/{id}": {
+        "get": {
+          "summary": "Get Doctor Patients by Id",
+          "description": "Get Doctor Patients by Id",
+          "tags": ["Doctor"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the doctor to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": " Doctor"
+            }
+          }
+        }
+      },
+      "/api/feedback/user/{userId}": {
+        "get": {
+          "summary": "Get Feedback by user  Id",
+          "description": "Get Feedback by user  Id",
+          "tags": ["Feedbacks"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Feedback by user to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": " Feedback by user "
+            }
+          }
+        }
+      },
+      "/api/feedback/{feedbackId}": {
+        "get": {
+          "summary": "Get Feedback by   Id",
+          "description": "Get Feedback by   Id",
+          "tags": ["Feedbacks"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Feedback by user to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": " Feedback by user "
+            }
+          }
+        }
+      },
+      "/api/health/health/{healthId}": {
+        "get": {
+          "summary": "Get Health by patient  Id",
+          "description": "Get Health by patient  Id",
+          "tags": ["Health"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the health by user to retrieve",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "patient by user "
+            }
+          }
+        }
+      },
+      "/api/report/{id}": { 
+        "get": {
+          "summary": "Get Report by Id",
+          "description": "Get Report by Id",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Report to retrieve",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Report Account"
+            }
+          }
+        }
+      },
+      "/api/report/patient/{patientId}": { 
+        "get": {
+          "summary": "Get Report by patient Id",
+          "description": "Get  Report By Patient  Id",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Patient to retrieve",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Patient Account"
+            }
+          }
+        }
+      },
+      "/api/report/doctor/{doctorIid}": { 
+        "get": {
+          "summary": "Get Report bt doctor Id",
+          "description": "Get Report by doctor Id",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Patient to retrieve",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Patient Account"
+            }
+          }
+        }
+      },
+      
+  "/api/appointments/filter": {
+  "get": {
+    "summary": "Filter Appointments",
+    "description": "Filter appointments by doctor ID, patient ID, status, or date.",
+    "tags": ["Appointments"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "doctor",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "Doctor's user ID (ObjectId)"
+      },
+      {
+        "name": "patient",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        },
+        "required": false,
+        "description": "Patient's user ID (ObjectId)"
+      },
+      {
+        "name": "status",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "enum": ["Pending", "Confirmed", "Completed", "Cancelled"]
+        },
+        "required": false,
+        "description": "Status of the appointment"
+      },
+      {
+        "name": "date",
+        "in": "query",
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "required": false,
+        "description": "Date in ISO format (e.g., 2025-04-16)"
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Filtered list of appointments",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appointments": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Appointment"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid query parameters"
+      }
+    }
+  }
+},
+   "/api/appointment/update/{id}": {
+  "put": {
+    "summary": "Update Appointment",
+    "description": "Update an existing appointment by its ID.",
+    "tags": ["Appointments"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the appointment to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "patient": {
+                "type": "string",
+                "description": "ID of the patient"
+              },
+              "doctor": {
+                "type": "string",
+                "description": "ID of the doctor"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date of appointment"
+              },
+              "timeSlot": {
+                "type": "string",
+                "description": "Time slot for the appointment"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Reason for the appointment"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+                "description": "Status of the appointment"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Appointment updated successfully"
+      },
+      "404": {
+        "description": "Appointment not found"
+      },
+      "400": {
+        "description": "Invalid input data"
+      }
+    }
+  }
+},
+ "/api/appointment/status/{id}": {
+  "put": {
+    "summary": "Update Appointment Status",
+    "description": "Update the status of an existing appointment by its ID.",
+    "tags": ["Appointments"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the appointment to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+           "properties": {
+              "patient": {
+                "type": "string",
+                "description": "ID of the patient"
+              },
+              "doctor": {
+                "type": "string",
+                "description": "ID of the doctor"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date of appointment"
+              },
+              "timeSlot": {
+                "type": "string",
+                "description": "Time slot for the appointment"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Reason for the appointment"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+                "description": "Status of the appointment"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes"
+              }
+            },
+            "required": ["status"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Appointment status updated successfully"
+      },
+      "404": {
+        "description": "Appointment not found"
+      },
+      "400": {
+        "description": "Invalid status value"
+      }
+    }
+  }
+},     
+     "/api/chat/read/{chatId}": {
+  "put": {
+    "summary": "Mark all messages as read in a chat",
+    "description": "Marks all messages as read for the specified user in a given chat.",
+    "tags": ["Chats-Messages"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "chatId",
+        "in": "path",
+        "description": "ID of the chat to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "sender": {
+                "type": "string",
+                "description": "ID of the user marking the messages as read"
+              },
+              "message": {
+                "type": "string",
+                "description": "ID of the user marking the messages as read"
+              },
+              "sentAt": {
+                "type": "date",
+                "description": "ID of the user marking the messages as read"
+              },
+              "isRead": {
+                "type": "boolean",
+                "description": "ID of the user marking the messages as read"
+              },
+              "participants": {
+                "type": "string",
+                "description": "ID of the user marking the messages as read"
+              }
+            },
+            "required": ["sender","message"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Messages marked as read successfully"
+      },
+      "404": {
+        "description": "Chat not found"
+      },
+      "400": {
+        "description": "Invalid input"
+      }
+    }
+  }
+},
+      "/api/user/profile/{id}": {
+  "put": {
+    "summary": "Update User Account",
+    "description": "Update a user's account information by ID.",
+    "tags": ["User"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the user to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "username": { "type": "string" },
+              "firstName": { "type": "string" },
+              "lastName": { "type": "string" },
+              "names": { "type": "string" },
+              "image": { "type": "string" },
+              "profile": {
+                "type": "object",
+                "properties": {
+                  "names": { "type": "string" },
+                  "bio": { "type": "string" },
+                  "avatar": { "type": "string" }
+                }
+              },
+              "role": {
+                "type": "string",
+                "enum": ["patient", "doctor", "admin"]
+              },
+              "address": { "type": "string" },
+              "phoneNumber": { "type": "string" },
+              "dateOfBirth": {
+                "type": "string",
+                "format": "date"
+              },
+              "email": {
+                "type": "string",
+                "format": "email"
+              },
+              "gender": {
+                "type": "string",
+                "enum": ["Male", "Female", "Other"]
+              },
+              "verified": { "type": "boolean" }
+            },
+            "required": ["email"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User account updated successfully"
+      },
+      "400": {
+        "description": "Invalid user input"
+      },
+      "404": {
+        "description": "User not found"
+      }
+    }
+  }
+},
+"/api/user/password": {
+  "put": {
+    "summary": "Update Authenticated User Password",
+    "description": "Allows the logged-in user to update their password using the current password.",
+    "tags": ["User"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "currentPassword": {
+                "type": "string",
+                "example": "OldPassword123!"
+              },
+              "newPassword": {
+                "type": "string",
+                "example": "NewSecurePassword456!"
+              },
+              "confirm": {
+                "type": "string",
+                "example": "NewSecurePassword456!"
+              }
+            },
+            "required": ["currentPassword", "newPassword", "confirm"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Password updated successfully"
+      },
+      "400": {
+        "description": "Validation failed (e.g. incorrect password, mismatch)"
+      },
+      "404": {
+        "description": "User not found"
+      },
+      "500": {
+        "description": "Server error"
+      }
+    }
+  }
+},
+"/api/doctor/put/{id}": {
+  "put": {
+    "summary": "MUpdate a doctor by id",
+    "description": "Update a doctor by id",
+    "tags": ["Doctor"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the chat to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+           "properties": {
+              "user": { "type": "string" },
+              "licenseNumber": { "type": "string" },
+              "specialization": { "type": "string" },
+              "yearsOfExperience": { "type": "string" },
+              "hospital": { "type": "string" },
+              "availableSlots": { "type": "string" },
+              "patient": { "type": "string" },
+              "verified": { "type": "boolean" }
+            },
+            "required": ["user"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Messages marked as read successfully"
+      },
+      "404": {
+        "description": "Chat not found"
+      },
+      "400": {
+        "description": "Invalid input"
+      }
+    }
+  }
+},
+      "/api/patient/profile/{id}": {
+        "put": {
+          "summary": "Update Profile of patient",
+          "description": "Update Profile",
+          "tags": ["Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[{
+    "name":"id",
+    "in":"path",
+    "description":"ID of the user to update Password",
+    "required":"true",
+    "type":"string"
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "description": "User details",
+        "required": true,
+        "schema": {
+          "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "Reference to the User ID"
+    },
+    "bloodType": {
+      "type": "string",
+      "enum": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+    },
+    "emergencyContact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "insurance": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "policyNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "weight": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    }
+  }
+        }
+      }
+  ],
+          "responses": {
+            "201": {
+              "description": "User Account Password Updated"
+            }
+          }
+        }
+      },
+      "/api/feedback/status/{feedbackId}": {
+        "put": {
+          "summary": "Update Feedback",
+          "description": "Update Feedback",
+          "tags": ["Feedbacks"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[{
+    "name":"feddbackId",
+    "in":"path",
+    "description":"ID of the user to update Password",
+    "required":"true",
+    "type":"string"
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "description": "Manager details",
+        "required": true,
+        "schema": {
+          "type": "object",
+         "properties": {
+          "sender": {
+            "type": "string",
+            "description": "The unique identifier for the sender associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The unique identifier for the receiver associated with the teacher (if relevant)."
+          },
+          "feedbackText": {
+            "type": "string",
+            "format": "date",
+            "description": "The feedback."
+          },
+          "rating": {
+            "type": "number",
+            "description": "The rating."
+          },
+         
+          "status": {
+            "type": "string",
+            "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+            "default": "Pending",
+            "description": "The current status of the appointment."
+          }
+        }
+        }
+      }
+  ],
+          "responses": {
+            "201": {
+              "description": "Manager Account Password Updated"
+            }
+          }
+        }
+      },
+      "/api/report/update/{id}": {
+        "put": {
+          "summary": "Update Report",
+          "description": "Update Report",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[{
+    "name":"id",
+    "in":"path",
+    "description":"ID of the user to update Report",
+    "required":"true",
+    "type":"string"
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "description": "Report details",
+        "required": true,
+        "schema": {
+          "type": "object",
+       "properties": {
+          "patient": {
+            "type": "string",
+            "description": "The unique identifier for the patient associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "doctor": {
+            "type": "string",
+            "description": "The doctor."
+          },
+          "summary": {
+            "type": "string",
+            "description": "The summary."
+          },
+          "vitals": {
+            "type": "string",
+            "description": "The vitals."},
+            "diagnosis": {
+            "type": "string",
+            "description": "The diagnosis."
+          },
+          "allergies": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "medications": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "lifestyleRecommendations": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "reportDate": {
+            "type": "date",
+            "description": "The allergies."
+          }
+         
+        }
+        }
+      }
+  ],
+          "responses": {
+            "201": {
+              "description": "Manager Account Password Updated"
+            }
+          }
+        }
+      },
+      "/api/health/update/{healthId}": {
+        "put": {
+          "summary": "Update Health",
+          "description": "Update Health",
+          "tags": ["Health"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+  "parameters":[{
+    "name":"healthId",
+    "in":"path",
+    "description":"ID of the user to update Report",
+    "required":"true",
+    "type":"string"
+    },
+    {
+        "name": "body",
+        "in": "body",
+        "description": "Report details",
+        "required": true,
+        "schema": {
+          "type": "object",
+      "properties": {
+          "patient": {
+            "type": "string",
+            "description": "The unique identifier for the patient associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "chronicDiseases": {
+            "type": "string",
+            "description": "The chronic Diseases."
+          },
+          "allergies": {
+            "type": "string",
+            "enum": ["Mild", "Moderate", "Severe"],
+            "description": "The allergies."
+          },
+          "medications": {
+            "type": "number",
+            "description": "The medications.",
+            "precribedBy":{
+              "type":"string"
+            }},
+            "familyHistory": {
+            "type": "string",
+            "description": "The familyHistory."
+          },
+          "lifestyle": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "The allergies."
+          }
+         
+        }
+        }
+      }
+  ],
+          "responses": {
+            "201": {
+              "description": "Manager Account Password Updated"
+            }
+          }
+        }
+      },
+      "/api/patient/delete/{id}": {
+        "delete": {
+          "summary": "Delete a Patient Account",
+          "description": "Delete a Patient Account",
+          "tags": ["Patient"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the Patient to delete",
+              "required": true,
+              "type": "string"
+            }
+  
+            
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete Patient Account"
+            }
+          }
+        }
+      },
+      "/api/appointment/delete/{id}": {
+        "delete": {
+          "summary": "Delete a appointment",
+          "description": "Delete a appointment",
+          "tags": ["Appointments"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the appointment to delete",
+              "required": true,
+              "type": "string"
+            }
+  
+            
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete appointment"
+            }
+          }
+        }
+      },
+      "/api/feedback/delete/{feedbackId}": {
+        "delete": {
+          "summary": "Delete a feedback Details",
+          "description": "Delete a feedback Details",
+          "tags": ["Feedbacks"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the feedback detail to delete",
+              "required": true,
+              "type": "string"
+            }
+  
+            
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete a feedback Details"
+            }
+          }
+        }
+      },
+      "/api/health/delete/{healthId}": {
+        "delete": {
+          "summary": "Delete a Health Application",
+          "description": "Delete a Health Application",
+          "tags": ["Health"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "healthId",
+              "in": "path",
+              "description": "ID of the loan to delete",
+              "required": true,
+              "type": "string"
+            }
+  
+            
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete a Loan Application"
+            }
+          }
+        }
+      },
+      "/api/doctor/delete/{id}": {
+        "delete": {
+          "summary": "Delete a Doctor Account",
+          "description": "Delete a doctor Account",
+          "tags": ["Doctor"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the teacher to delete",
+              "required": true,
+              "type": "string"
+            }
+  
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete Manager Account"
+            }
+          }
+        }
+      },
+      "/api/user/delete/{id}": {
+        "delete": {
+          "summary": "Delete a User Account",
+          "description": "Delete a User Account",
+          "tags": ["User"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the user to delete",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete User Account"
+            }
+          }
+        }
+      },
+      "/api/report/delete/{id}": {
+        "delete": {
+          "summary": "Delete a Report",
+          "description": "Delete a Report",
+          "tags": ["Reports"],
+          "security":[
+            {
+          "Bearer":[]
+             }
+  ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "ID of the user to delete",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Delete User Account"
+            }
+          }
+        }
+      }
+      
+  },
+    "definitions": {
+     "Patient": {
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "Reference to the User ID"
+    },
+    "bloodType": {
+      "type": "string",
+      "enum": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+    },
+    "emergencyContact": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "relation": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        }
+      }
+    },
+    "insurance": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string"
+        },
+        "policyNumber": {
+          "type": "string"
+        }
+      }
+    },
+    "weight": {
+      "type": "number"
+    },
+    "height": {
+      "type": "number"
+    }
+  },
+  "required": ["user"]
+},
+  "Doctor": {
+  "type": "object",
+  "properties": {
+    "user": {
+      "type": "string",
+      "description": "The reference to the user object associated with the doctor."
+    },
+    "licenseNumber": {
+      "type": "string",
+      "description": "The unique license number assigned to the doctor."
+    },
+    "specialization": {
+      "type": "string",
+      "description": "The medical specialization of the doctor (e.g., cardiology, neurology, etc.)."
+    },
+    "yearsOfExperience": {
+      "type": "number",
+      "description": "The number of years the doctor has been practicing medicine."
+    },
+    "hospital": {
+      "type": "string",
+      "description": "The name of the hospital or clinic where the doctor practices."
+    },
+    "availableSlots": {
+      "type": "array",
+      "description": "An array of available time slots for appointments, each including a date and time range.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "description": "The date for the available slot."
+          },
+          "from": {
+            "type": "string",
+            "description": "The start time of the available slot (e.g., '09:00 AM')."
+          },
+          "to": {
+            "type": "string",
+            "description": "The end time of the available slot (e.g., '11:00 AM')."
+          }
+        },
+        "required": ["date", "from", "to"]
+      }
+    },
+    "patients": {
+      "type": "array",
+      "description": "An array of references to patient objects assigned to the doctor.",
+      "items": {
+        "type": "string",
+        "description": "The reference to a patient object."
+      }
+    }
+  },
+  "required": ["user", "licenseNumber", "specialization"],
+  "additionalProperties": false
+}
+,
+ "User": {
+  "type": "object",
+  "properties": {
+    "username": {
+      "type": "string",
+      "description": "The unique username for the user."
+    },
+    "firstName": {
+      "type": "string",
+      "description": "The user's first name."
+    },
+    "lastName": {
+      "type": "string",
+      "description": "The user's last name."
+    },
+    "names": {
+      "type": "string",
+      "description": "The full name of the user (first and last name combined)."
+    },
+    "image": {
+      "type": "string",
+      "description": "URL or path to the user's profile image."
+    },
+    "profile": {
+      "type": "object",
+      "properties": {
+        "names": {
+          "type": "string",
+          "description": "The full name as it appears in the user's profile."
+        },
+        "bio": {
+          "type": "string",
+          "description": "A short biography of the user."
+        },
+        "avatar": {
+          "type": "string",
+          "description": "URL or path to the user's avatar image."
+        }
+      },
+      "description": "Additional profile information for the user."
+    },
+    "role": {
+      "type": "string",
+      "enum": ["patient", "doctor", "admin"],
+      "default": "patient",
+      "description": "The role of the user (can be patient, doctor, or admin)."
+    },
+    "address": {
+      "type": "string",
+      "description": "The address of the user."
+    },
+    "phoneNumber": {
+      "type": "string",
+      "description": "The phone number of the user."
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "format": "date",
+      "description": "The date of birth of the user."
+    },
+    "email": {
+      "type": "string",
+      "required": true,
+      "unique": true,
+      "lowercase": true,
+      "description": "The email address of the user, must be unique."
+    },
+    "gender": {
+      "type": "string",
+      "enum": ["Male", "Female", "Other"],
+      "description": "The gender of the user."
+    },
+    "password": {
+      "type": "string",
+      "required": true,
+      "minLength": 8,
+      "description": "The user's password, must be at least 8 characters long."
+    },
+    "otpExpires": {
+      "type": "string",
+      "description": "Expiration time for the OTP (One Time Password) if used."
+    },
+    "otp": {
+      "type": "string",
+      "description": "The OTP for user verification."
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Indicates whether the user has been verified."
+    }
+  },
+  "required": ["email", "password"],
+  "additionalProperties": false
+}
+,
+  "Appointments": {
+  "type": "object",
+  "properties": {
+        "patient": {
+          "type": "string",
+          "description": "The unique identifier for the patient associated with the teacher (if relevant, in case of medical teachers)."
+        },
+        "doctor": {
+          "type": "string",
+          "description": "The unique identifier for the doctor associated with the teacher (if relevant)."
+        },
+        "date": {
+          "type": "string",
+          "format": "date",
+          "description": "The date of the appointment."
+        },
+        "timeSlot": {
+          "type": "string",
+          "description": "The time slot of the appointment."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason for the appointment."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+          "default": "Pending",
+          "description": "The current status of the appointment."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional notes related to the appointment."
+        }
+      },
+  "required": ["patient", "doctor", "reason", "status","notes"],
+  "additionalProperties": false
+},
+  "Chats": {
+  "type": "object",
+      "description": "Details related to any loan-related communication (e.g., messages between the teacher and the loan officer).",
+      "properties": {
+        "participants": {
+          "type": "array",
+          "description": "List of participants in the communication (teacher, loan officer, etc.).",
+          "User": {
+            "type": "string",
+            "description": "The ID of a participant in the chat."
+          }
+        },
+        "messages": {
+          "type": "array",
+          "description": "An array of messages exchanged in the loan application chat.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sender": {
+                "type": "string",
+                "description": "The ID of the message sender."
+              },
+              "message": {
+                "type": "string",
+                "description": "The content of the message."
+              },
+              "sentAt": {
+                "type": "string",
+                "format": "date-time",
+                "description": "The timestamp when the message was sent."
+              },
+              "isRead": {
+                "type": "boolean",
+                "description": "Indicates whether the message has been read."
+              }
+            }
+          }
+        },
+        "lastUpdated": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp when the chat was last updated."
+        }
+      },
+    "required": ["partcipants", "message"],
+    "additionalProperties": false
+  },
+  "Feedbacks": {
+    "type": "object",
+    "properties": {
+          "sender": {
+            "type": "string",
+            "description": "The unique identifier for the sender associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "receiver": {
+            "type": "string",
+            "description": "The unique identifier for the receiver associated with the teacher (if relevant)."
+          },
+          "feedbackText": {
+            "type": "string",
+            "format": "date",
+            "description": "The feedback."
+          },
+          "rating": {
+            "type": "number",
+            "description": "The rating."
+          },
+         
+          "status": {
+            "type": "string",
+            "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+            "default": "Pending",
+            "description": "The current status of the appointment."
+          }
+        },
+    "required": ["sender", "receiver", "feedbackText", "status","rating"],
+    "additionalProperties": false
+  },
+  "Health": {
+    "type": "object",
+    "properties": {
+          "patient": {
+            "type": "string",
+            "description": "The unique identifier for the patient associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "chronicDiseases": {
+            "type": "string",
+            "description": "The chronic Diseases."
+          },
+          "allergies": {
+            "type": "string",
+            "enum": ["Mild", "Moderate", "Severe"],
+            "description": "The allergies."
+          },
+          "medications": {
+            "type": "number",
+            "description": "The medications.",
+            "precribedBy":{
+              "type":"string"
+            }},
+            "familyHistory": {
+            "type": "string",
+            "description": "The familyHistory."
+          },
+          "lifestyle": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "updatedAt": {
+            "type": "date",
+            "description": "The allergies."
+          }
+         
+        },
+    "required": ["patient", "chronicDiseases", "allergies", "medications","surgeries","familyHistory","lifestyle"],
+    "additionalProperties": false
+  },
+  "Report": {
+    "type": "object",
+    "properties": {
+          "patient": {
+            "type": "string",
+            "description": "The unique identifier for the patient associated with the teacher (if relevant, in case of medical teachers)."
+          },
+          "doctor": {
+            "type": "string",
+            "description": "The doctor."
+          },
+          "summary": {
+            "type": "string",
+            "description": "The summary."
+          },
+          "vitals": {
+            "type": "string",
+            "description": "The vitals."},
+            "diagnosis": {
+            "type": "string",
+            "description": "The diagnosis."
+          },
+          "allergies": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "medications": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "lifestyleRecommendations": {
+            "type": "string",
+            "description": "The allergies."
+          },
+          "reportDate": {
+            "type": "date",
+            "description": "The allergies."
+          }
+         
+        },
+    "required": ["patient", "chronicDiseases", "allergies", "medications","surgeries","familyHistory","lifestyle"],
+    "additionalProperties": false
+  },
+  
+  "Response":{
+    "type": "object",
+    "properties": {
+    "responseDate":{
+      "type": "Date"
+      },
+      
+        "loanStatus":{
+        "type":"string",
+        "enum": ["Approved","Denied","Update request","Pending"]
+        
+      },
+      
+      "approvedAmount":{
+        "type": "Number"
+      },
+      
+      "interestRate":{
+        "type": "string"
+      
+      },
+      
+        "repaymentPeriod":{
+        "type": "Number"
+      },
+      
+      "monthlyRepaymentAmount":{
+        "type": "Number"
+      },
+      
+      "totalRepaymentAmount":{
+        "type": "Number"
+      },
+       "message":{
+        "type": "string"
+      }
+    }
+  }
+  }
+  }
+      
+  
+  
+  

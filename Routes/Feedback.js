@@ -8,6 +8,6 @@ Feedbackrouter.post('/create', auth.BothJWT, feedbackController.createFeedback);
 Feedbackrouter.get('/user/:userId', auth.BothJWT, feedbackController.getFeedbackByUser);
 Feedbackrouter.get('/:feedbackId', auth.BothJWT, feedbackController.getFeedbackById);
 Feedbackrouter.put('/status/:feedbackId', auth.BothJWT, feedbackController.updateFeedbackStatus);
-Feedbackrouter.delete('/:feedbackId', auth.BothJWT, feedbackController.deleteFeedback);
+Feedbackrouter.delete('/delete/:feedbackId', auth.BothJWT, feedbackController.deleteFeedback);
 
 module.exports = Feedbackrouter;

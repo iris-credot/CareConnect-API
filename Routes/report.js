@@ -10,6 +10,6 @@ Reportrouter.get('/:id', auth.BothJWT, reportController.getReportById);
 Reportrouter.get('/patient/:patientId', auth.BothJWT, reportController.getReportsByPatient);
 Reportrouter.get('/doctor/:doctorId', auth.BothJWT, reportController.getReportsByDoctor);
 Reportrouter.put('/:id', auth.BothJWT, reportController.updateReport);
-Reportrouter.delete('/:id', auth.BothJWT, reportController.deleteReport);
+Reportrouter.delete('/delete/:id', auth.BothJWT, reportController.deleteReport);
 
 module.exports = Reportrouter;

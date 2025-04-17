@@ -1,7 +1,7 @@
-js
 const Chat = require('../Models/chat');
 const asyncWrapper = require('../Middleware/async');
-const { BadRequest, NotFound } = require('../Error');
+const  BadRequest = require('../Error/BadRequest');
+const  NotFound = require('../Error/NotFound');
 const { sendNotification } = require('./notificationController');
 
 module.exports = {

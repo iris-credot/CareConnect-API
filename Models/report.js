@@ -24,10 +24,10 @@ const reportSchema = new mongoose.Schema({
     temperature: Number,
     respirationRate: Number,
   },
-  diagnosis: String,
+  diagnosis: {type:String},
   allergies: [String],
   medications: [String],
-  lifestyleRecommendations: String,
+  lifestyleRecommendations:{type: String},
   nextAppointment: {
     type: Date,
   },

@@ -6,8 +6,8 @@ const healthController = require('../Controllers/healthController');
 // Create a new health record
 Healthrouter.post('/create', auth.BothJWT, healthController.createHealthRecord);
 Healthrouter.get('/all', auth.BothJWT, healthController.getAllHealthRecords);
-Healthrouter.get('/patient/:patientId', auth.BothJWT, healthController.getHealthByPatient);
-Healthrouter.put('/patient/:patientId', auth.BothJWT, healthController.updateHealthRecord);
-Healthrouter.delete('/patient/:patientId', auth.BothJWT, healthController.deleteHealthRecord);
+Healthrouter.get('/health/:healthId', auth.BothJWT, healthController.getHealthByPatient);
+Healthrouter.put('/update/:healthId', auth.BothJWT, healthController.updateHealthRecord);
+Healthrouter.delete('/delete/:healthId', auth.BothJWT, healthController.deleteHealthRecord);
 
 module.exports = Healthrouter;

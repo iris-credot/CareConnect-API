@@ -22,7 +22,7 @@ const feedbackSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'resolved'],
+    enum: ['pending', 'resolved',, 'Completed', 'Cancelled'],
     default: 'pending',
   }
 }, { timestamps: true });

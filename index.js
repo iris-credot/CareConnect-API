@@ -14,7 +14,7 @@ const AllRoutes = require('./Routes/app');
 
 app.use(express.json());
 app.use(cookieParser());
-// app.use('/careConnect', swaggerUi.serve, swaggerUi.setup(swagger))
+app.use('/careConnect', swaggerUi.serve, swaggerUi.setup(swagger))
 // app.use(cors({
 //     origin: ["https://loanhub-frontend.onrender.com","https://loanhub-frontend-xity.onrender.com"],
 //     credentials: true,
