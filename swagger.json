@@ -72,7 +72,7 @@
         "post": {
           "summary": "Create a Health Application",
           "description": "Create a Health Application",
-          "tags": ["Health-Patient"],
+          "tags": ["Health"],
           "consumes": ["multipart/form-data"],
           "security":[
             {
@@ -546,7 +546,7 @@
         "get": {
           "summary": "List all Health Applications",
           "description": "List of Health Applications",
-          "tags": ["Health-Patient"],
+          "tags": ["Health"],
           "security":[
             {
           "Bearer":[]
