@@ -1,7 +1,7 @@
 
 const mongoose= require('mongoose');
 const {isEmail} = require('validator')
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const joi = require('joi');
 const userSchema = new mongoose.Schema({
   username: { 

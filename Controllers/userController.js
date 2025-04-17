@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const Badrequest=require('../Error/BadRequest');
 const cloudinary =require('cloudinary');
 const Notfound=require('../Error/NotFound');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const UnauthorizedError =require('../Error/Unauthorized');
 const sendEmail = require('../Middleware/Sendmail');
 cloudinary.v2.config({

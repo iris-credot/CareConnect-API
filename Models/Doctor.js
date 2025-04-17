@@ -1,7 +1,7 @@
 // models/manager.js
 
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+
 // Define the Manager Schema
 const doctorSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
