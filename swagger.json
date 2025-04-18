@@ -80,52 +80,17 @@
              }
   ],
   "parameters": [
-    {
-      "name": "Patient",
-      "in": "formData",
-      "type": "string",
-      "description": "The ObjectId of the patientId to which the patient belongs",
-      "example": "609879f16836050e184a0db3",
-      "required": true
-    },
-    {
-      "name": "chronicDiseases",
-      "in": "formData",
-      "type": "string",
-      "description": "Full Name of the  patient who requesting the loan"
-    },
-    {
-      "name": "allergies",
-      "in": "formData",
-      "type": "string",
-      "description": "Email of  patient who requesting the loan"
-    },
-    {
-      "name": "medications",
-      "in": "formData",
-      "type": "string",
-      "description": "ID of  patient who requesting the loan"
-    },
-    {
-      "name": "surgeries",
-      "in": "formData",
-      "type": "date",
-      "description": "Phone Number of  patient who requesting the loan"
-    },
-    {
-      "name": "familyHistory",
-      "in": "formData",
-      "type": "string",
-      "description": "History of patient who requesting the loan"
-    },
-    {
-      "name": "lifestyle",
-      "in": "formData",
-      "type": "string",
-      "description": "Lifestyle of where  patient work"
-    }
-
-  ],
+            
+            {
+              "in": "body",
+              "name": "body",
+              "schema": {
+                "$ref": "#/definitions/Health"
+              },
+              "required": true,
+              "description": "Appointment  object"
+            }
+          ],
          
           "responses": {
             "201": {
