@@ -603,18 +603,7 @@
           "Bearer":[]
              }
   ],
-          "parameters": [
-            
-            {
-              "in": "body",
-              "name": "body",
-              "schema": {
-                "$ref": "#/definitions/User"
-              },
-              "required": true,
-              "description": "User object"
-            }
-          ],
+          
           "responses": {
             "201": {
               "description": "List of User Account"
