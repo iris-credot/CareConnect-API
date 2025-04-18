@@ -6,6 +6,7 @@ const feedbackRoute = require('./Feedback.js');
 const chatroute = require('./chatRoute.js');
 const healthroute = require('./healthRoute.js');
 const reportroute = require('./report.js');
+const ntifications =require('./notifications.js');
 
 const express = require('express');
 
@@ -15,9 +16,10 @@ Router.use('/patient',PatientRoute);
 Router.use('/user',userRoute);
 Router.use('/appointment',appointmentRoute);
 Router.use('/feedback',feedbackRoute);
-Router.use('chat',chatroute);
-Router.use('health',healthroute);
-Router.use('report',reportroute);
+Router.use('/chat',chatroute);
+Router.use('/health',healthroute);
+Router.use('/report',reportroute);
+Router.use('/notify',ntifications);
 
 
 module.exports = Router;

@@ -2,7 +2,7 @@ const asyncWrapper = require('../Middleware/async');
 const Appointment = require('../Models/appointments');
 const BadRequest = require('../Error/BadRequest');
 const NotFound = require('../Error/NotFound');
-const sendNotification  = require('./notificationController');
+const {sendNotification}  = require('./notificationController');
 
 
 const appointmentController = {

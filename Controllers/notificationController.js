@@ -1,13 +1,11 @@
-// controllers/notificationController.js
 const Notification = require('../Models/Notification');
-
 
 /**
  * Sends a notification to a user
  * @param {Object} param0
  * @param {mongoose.Types.ObjectId} param0.user - The user ID to notify
  * @param {String} param0.message - Notification content
- * @param {'appointment'|'report'|'chat'|'reminder'} param0.type - Notification type
+ * @param {'appointment'|'report'|'chat'|'reminder'|'feedback'} param0.type - Notification type
  * @param {Boolean} [param0.seen=false] - Whether the notification has been seen
  */
 const sendNotification = async ({ user, message, type, seen = false }) => {
@@ -25,4 +23,62 @@ const sendNotification = async ({ user, message, type, seen = false }) => {
   }
 };
 
-module.exports = sendNotification;
+/**
+ * Get all notifications for a specific user
+ */
+const getUserNotifications = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notifications = await Notification.find({ user: id }).sort({ createdAt: -1 });
+    res.status(200).json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch notifications' });
+  }
+};
+
+/**
+ * Mark a notification as seen
+ */
+const markAsSeen = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const notification = await Notification.findByIdAndUpdate(
+      id,
+      { seen: true },
+      { new: true }
+    );
+
+    if (!notification) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+
+    res.status(200).json(notification);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to mark notification as seen' });
+  }
+};
+
+/**
+ * Delete a notification
+ */
+const deleteNotification = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Notification.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return res.status(404).json({ error: 'Notification not found' });
+    }
+
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete notification' });
+  }
+};
+
+module.exports = {
+  sendNotification,
+  getUserNotifications,
+  markAsSeen,
+  deleteNotification
+};

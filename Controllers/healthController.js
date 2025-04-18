@@ -2,27 +2,44 @@ const asyncWrapper = require('../Middleware/async');
 const Health = require('../Models/health');
 const NotFound = require('../Error/NotFound');
 const BadRequest = require('../Error/BadRequest');
-const { sendNotification } = require('./notificationController');
+const {sendNotification}  = require('./notificationController');
 const healthController = {
 
   // Create a new health record
   createHealthRecord: asyncWrapper(async (req, res, next) => {
-    const { patient } = req.body;
-
-    // Ensure one record per patient
+    const { patient, chronicDiseases, allergies, medications, surgeries, familyHistory, lifestyle } = req.body;
+  
+    if (!patient) {
+      return next(new BadRequest('Patient ID is required.'));
+    }
+  
     const existing = await Health.findOne({ patient });
-    if (existing) return next(new BadRequest('Health record already exists for this patient'));
-
-    const newRecord = new Health(req.body);
+    if (existing) {
+      return next(new BadRequest('Health record already exists for this patient'));
+    }
+  
+    const newRecord = new Health({
+      patient,
+      chronicDiseases,
+      allergies,
+      medications,
+      surgeries,
+      familyHistory,
+      lifestyle,
+      updatedAt: new Date() // or use req.body.updatedAt if you want to keep it from input
+    });
+  
     const saved = await newRecord.save();
+  
     await sendNotification({
-        user: patient,
-        message: 'A new health record has been created for you.',
-        type: 'health',
-      });
+      user: patient,
+      message: 'A new health record has been created for you.',
+      type: 'health',
+    });
+  
     res.status(201).json({ message: 'Health record created', data: saved });
   }),
-
+  
   // Get all health records (for admin purposes)
   getAllHealthRecords: asyncWrapper(async (req, res, next) => {
     const records = await Health.find().populate('patient').populate('medications.prescribedBy');

@@ -2,7 +2,7 @@ const Report = require('../Models/report'); // Adjust the path based on your str
 const asyncWrapper = require('../Middleware/async');
 const BadRequest = require('../Error/BadRequest');
 const NotFound = require('../Error/NotFound');
-const { sendNotification } = require('./notificationController');
+const {sendNotification}  = require('./notificationController');
 const reportController = {
   
   // Create a new medical report

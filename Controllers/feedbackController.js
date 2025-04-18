@@ -2,7 +2,7 @@ const asyncWrapper = require('../Middleware/async');
 const Feedback = require('../Models/Feedback');
 const BadRequest = require('../Error/BadRequest');
 const NotFound = require('../Error/NotFound');
-const { sendNotification } = require('./notificationController');
+const {sendNotification}  = require('./notificationController');
 
 const feedbackController = {
   // Create new feedback

@@ -2,7 +2,7 @@ const Chat = require('../Models/chat');
 const asyncWrapper = require('../Middleware/async');
 const  BadRequest = require('../Error/BadRequest');
 const  NotFound = require('../Error/NotFound');
-const { sendNotification } = require('./notificationController');
+const {sendNotification}  = require('./notificationController');
 
 module.exports = {
   // Create a new chat between two users

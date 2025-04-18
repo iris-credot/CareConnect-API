@@ -30,8 +30,7 @@ const reportSchema = new mongoose.Schema({
   lifestyleRecommendations:{type: String},
   nextAppointment: {
     type: Date,
-  },
-  attachedFiles: [String], // e.g., links to PDF/image scans
+  }// e.g., links to PDF/image scans
 }, { timestamps: true });
 
 module.exports = mongoose.model('Report', reportSchema);

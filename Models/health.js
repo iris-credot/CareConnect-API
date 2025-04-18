@@ -35,13 +35,11 @@ const healthSchema = new mongoose.Schema({
       endDate: Date
     }
   ],
-  surgeries: [
-    {
+  surgeries: {
+    
       type: String,
-      date: Date,
-      notes: String
-    }
-  ],
+  }
+  ,
   familyHistory: [
     {
       relation: String,
