@@ -9,9 +9,9 @@ const bcrypt = require('bcryptjs');
 const UnauthorizedError =require('../Error/Unauthorized');
 const sendEmail = require('../Middleware/Sendmail');
 cloudinary.v2.config({
-    cloud_name: process.env.cloud_name,
-    api_key: process.env.api_key,
-    api_secret: process.env.api_secret
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
   });
 
 const userController ={
@@ -23,49 +23,71 @@ const userController ={
     
 
     createUser: asyncWrapper(async (req, res, next) => {
-        const email = req.body.email.toLowerCase();
-      const foundUser = await userModel.findOne({ email });
+      const {
+        email,
+        username,
+        firstName,
+        lastName,
+        names,
+        profile,
+        address,
+        phoneNumber,
+        dateOfBirth,
+        password,
+        gender
+      } = req.body;
+    
+      const normalizedEmail = email.toLowerCase();
+      const emaill = req.body.email.toLowerCase();
+      const foundUser = await userModel.findOne({ email:emaill});
       if (foundUser) {
           return next(new Badrequest("Email already in use"));
       };
+      if  (!req.file) {
+        console.log('Request body:', req.body);
+        console.log('Request file:', req.file);
+        console.log('Request Headers:', req.headers['content-type']);
 
-      if (!req.files || !req.files.image || req.files.image.length === 0) {
         return next(new Badrequest("Image file is required."));
       }
+  
+
+     
       const otp = Math.floor(Math.random() * 8000000);
       const otpExpirationDate = new Date(Date.now() + 5 * 60 * 1000); 
-         const dateNow = Date.now();
-          const image = `IMAGE_${dateNow}`;
-          const ImageCloudinary = await cloudinary.v2.uploader.upload(req.files.image[0].path,{
-            folder:`CareConnect`,
-            public_id: image
-          })
+         const images = `IMAGE_${Date.now()}`;
+         try {
+          const ImageCloudinary = await cloudinary.v2.uploader.upload(req.file.path, {
+            folder: 'CareConnect',
+            public_id: images
+          });
     
-      const newUser = new userModel({
-        username:req.body.username,
-        firstName:req.body.firstName,
-        lastName:req.body.lastName,
-        names:req.body.names,
-        image:ImageCloudinary.secure_url,
-        role:req.body.role,
-        profile:req.body.profile,
-        address:req.body.address,
-        phoneNumber:req.body.phoneNumber,
-        dateOfBirth:req.body.dateOfBirth,
-        email:req.body.email,
-        password:req.body.password,
-        gender:req.body.gender,
-        otp: otp,
-        otpExpires: otpExpirationDate,
-    });
-
-    const savedUser = await newUser.save();
-        const body=`Your OTP is ${otp}`;
-        
-        await sendEmail(req.body.email, "Verify your account",body );
-      // await sendOtpEmail(req.body.email,res);
-        // Ensure this is the only response sent for this request
-        res.status(200).json({ user: savedUser, otp: otp });
+          const newUser = new userModel({
+            username,
+            firstName,
+            lastName,
+            names,
+            image: ImageCloudinary.secure_url,
+            profile,
+            address,
+            phoneNumber,
+            dateOfBirth,
+            email,
+            password,
+            gender,
+            otp: otp,
+            otpExpires: otpExpirationDate,
+          });
+    
+          const savedUser = await newUser.save();
+          const body = `Your OTP is ${otp}`;
+          await sendEmail(req.body.email, "Care-Connect Sytem:Verify your account", body);
+          
+          res.status(200).json({ user: savedUser, otp: otp });
+        } catch (err) {
+          console.error('Error uploading image to Cloudinary:', err);
+          return next(new Badrequest('Error uploading image to Cloudinary.'));
+        }
     }),
     
     

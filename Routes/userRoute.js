@@ -4,8 +4,10 @@ const validate= require('../Middleware/validation');
 const auth = require('../Middleware/authentication');
 const authController = require('../Controllers/userController');
 const login = require('../Controllers/loginController');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
-Userrouter.post('/signup', validate,authController.createUser);
+Userrouter.post('/signup', upload.single('image'),validate,authController.createUser);
 Userrouter.post('/login', login.login_post);
 Userrouter.post('/forgot', authController.ForgotPassword);
 Userrouter.post('/verifyotp', authController.OTP);

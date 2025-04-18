@@ -31,10 +31,7 @@ const doctorController = {
       return next(new NotFound('User not found'));
     }
 
-    if (foundUser.role !== 'doctor') {
-      return next(new BadRequest('This user is not assigned the doctor role'));
-    }
-
+   
     const existingDoctor = await Doctor.findOne({ user });
     if (existingDoctor) {
       return next(new BadRequest('Doctor profile already exists for this user'));

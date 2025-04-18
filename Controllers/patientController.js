@@ -24,15 +24,11 @@ const patientController = {
 
   // Create a new patient (must be linked to an existing user with role = patient)
   createPatient: asyncWrapper(async (req, res, next) => {
-    const { userId, bloodType, emergencyContact, insurance, weight, height } = req.body;
+    const { user, bloodType, emergencyContact, insurance, weight, height } = req.body;
 
-    const user = await userModel.findById(userId);
-    if (!user) {
+    const userId = await userModel.findById(user);
+    if (!userId) {
       return next(new NotFound('User not found'));
-    }
-
-    if (user.role !== 'patient') {
-      return next(new BadRequest('User must have role "patient"'));
     }
 
     const existingPatient = await patientModel.findOne({ user: userId });
