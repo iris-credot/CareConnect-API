@@ -43,16 +43,7 @@ const userController ={
       if (foundUser) {
           return next(new Badrequest("Email already in use"));
       };
-      if  (!req.file) {
-        console.log('Request body:', req.body);
-        console.log('Request file:', req.file);
-        console.log('Request Headers:', req.headers['content-type']);
-
-        return next(new Badrequest("Image file is required."));
-      }
-  
-
-     
+          
       const otp = Math.floor(Math.random() * 8000000);
       const otpExpirationDate = new Date(Date.now() + 5 * 60 * 1000); 
          const images = `IMAGE_${Date.now()}`;

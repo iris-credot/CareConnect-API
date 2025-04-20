@@ -322,7 +322,7 @@
           "parameters":[{
             "name":"body",
             "in":"body",
-            "description":"Teacher details",
+            "description":"User details",
             "required":"true",
             "schema":{
                 "type":"object",
