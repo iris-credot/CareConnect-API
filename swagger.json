@@ -458,14 +458,6 @@
           "Bearer":[]
              }
   ],
-          "parameters": [
-            
-            {
-          
-              "required": true,
-              "description": "User object"
-            }
-          ],
           "responses": {
             "201": {
               "description": "Logout"
