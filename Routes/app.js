@@ -7,6 +7,8 @@ const chatroute = require('./chatRoute.js');
 const healthroute = require('./healthRoute.js');
 const reportroute = require('./report.js');
 const ntifications =require('./notifications.js');
+const foods =require('./foodsRoute.js');
+const sports =require('./sportsRoute.js');
 
 const express = require('express');
 
@@ -20,6 +22,8 @@ Router.use('/chat',chatroute);
 Router.use('/health',healthroute);
 Router.use('/report',reportroute);
 Router.use('/notify',ntifications);
+Router.use('/sports',sports);
+Router.use('/foods',foods);
 
 
 module.exports = Router;

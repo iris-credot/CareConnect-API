@@ -12,7 +12,8 @@ const notificationSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['appointment', 'report', 'chat', 'reminder','feedback'],
+    enum: ['appointment', 'report', 'chat', 'reminder','feedback','foodRecommendation','health'],
+     default:'reminder',
     required: true,
   },
   seen: {

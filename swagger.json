@@ -1863,7 +1863,7 @@
           }
         }
       },
-      "/api/notify/{id}": {
+      "/api/notify/get/{id}": {
         "get": {
           "tags": [
             "Notifications"
@@ -1927,7 +1927,7 @@
         }
       }
     },
-    "/notify/{id}": {
+    "/api/notify/{id}": {
       "delete": {
         "tags": [
           "Notifications"
@@ -1955,7 +1955,298 @@
           }
         }
       }
-    }
+    },
+    "/api/sports/create": {
+      "post": {
+        "tags": ["Sport Recommendations"],
+        "summary": "Create a new sport recommendation",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "description": "Sport recommendation data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["patient", "recommendedSports"],
+                "properties": {
+                  "patient": {
+                    "type": "string",
+                    "description": "Patient ID"
+                  },
+                  "recommendedSports": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "duration": { "type": "string" },
+                        "frequency": { "type": "string" },
+                        "intensity": { "type": "string" }
+                      }
+                    }
+                  },
+                  "notes": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sport recommendation created successfully"
+          }
+        }
+      }
+    },
+    "/api/sports/all": {
+      "get": {
+        "tags": ["Sport Recommendations"],
+        "summary": "Get all sport recommendations",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of all sport recommendations"
+          }
+        }
+      }
+    },
+    "/api/sports/get/{id}": {
+      "get": {
+        "tags": ["Sport Recommendations"],
+        "summary": "Get a sport recommendation by ID",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Sport recommendation ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sport recommendation found"
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }
+    },
+    "/api/sports/update/{id}": {
+      "put": {
+        "tags": ["Sport Recommendations"],
+        "summary": "Update a sport recommendation",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Recommendation ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Fields to update",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "recommendedSports": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": { "type": "string" },
+                        "duration": { "type": "string" },
+                        "frequency": { "type": "string" },
+                        "intensity": { "type": "string" }
+                      }
+                    }
+                  },
+                  "notes": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sport recommendation updated"
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }
+    },
+    "/api/sports/delete/{id}": {
+      "delete": {
+        "tags": ["Sport Recommendations"],
+        "summary": "Delete a sport recommendation",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "Recommendation ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recommendation deleted"
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }
+    },
+    "/api/foods/create": {
+      "post": {
+        "summary": "Create food recommendation",
+        "tags": ["Food Recommendations"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoodRecommendation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recommendation created successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/foods/all": {
+      "get": {
+        "summary": "Get all food recommendations",
+        "tags": ["Food Recommendations"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "List of food recommendations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoodRecommendation"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/foods/get/{id}": {
+      "get": {
+        "summary": "Get food recommendation by ID",
+        "tags": ["Food Recommendations"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Food recommendation details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FoodRecommendation"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }
+    },
+    "/api/foods/update/{id}": {
+      "put": {
+        "summary": "Update food recommendation",
+        "tags": ["Food Recommendations"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FoodRecommendation"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Recommendation updated successfully"
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }
+    },
+    "/api/foods/delete/{id}": {
+      "delete": {
+        "summary": "Delete food recommendation",
+        "tags": ["Food Recommendations"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Recommendation deleted successfully"
+          },
+          "404": {
+            "description": "Recommendation not found"
+          }
+        }
+      }}
   
       
   },
@@ -2063,6 +2354,34 @@
   "required": ["user", "licenseNumber", "specialization"],
   "additionalProperties": false
 }
+,
+"Sport Recommendations": {
+  "type": "object",
+  "properties": {
+    "patient": {
+      "type": "string",
+      "description": "Reference to the Patient ID"
+    },
+    "recommendedSports": {
+      "type": "array",
+      "description": "List of recommended sports",
+      "items": {
+        "$ref": "#/components/schemas/RecommendedSport"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or advice"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp when the recommendation was created"
+    }
+  },
+  "required": ["patient", "recommendedSports"]
+}
+
 ,
  "User": {
   "type": "object",
@@ -2401,7 +2720,34 @@
         }
       }
     },
-  
+    "Food Recommendations": {
+      "type": "object",
+      "properties": {
+        "patient": {
+          "type": "string",
+          "description": "MongoDB ObjectId of the patient (referenced)"
+        },
+        "recommendedFoods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/RecommendedFood"
+          },
+          "description": "List of recommended food items"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional notes or instructions"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp of the recommendation"
+        }
+      },
+      "required": ["patient", "recommendedFoods"]
+    }
+  ,
+
   "Response":{
     "type": "object",
     "properties": {

@@ -8,7 +8,7 @@ const {
 } = require('../Controllers/notificationController');
 
 // Get all notifications for a user
-router.get('/:id', getUserNotifications);
+router.get('/get/:id', getUserNotifications);
 
 // Mark a single notification as seen
 router.put('/:id/seen', markAsSeen);
