@@ -104,28 +104,22 @@
           "summary": "Create a Send chat",
           "description": "Create a Send message",
           "tags": ["Chats-Messages"],
-          "consumes": ["multipart/form-data"],
           "security":[
             {
           "Bearer":[]
              }
   ],
-  "parameters": [
+  "parameters":[  
     {
-        "name": "User",
-        "in": "formData",
-        "type": "string",
-        "description": "ID patient who is sending message"
+      "in": "body",
+      "name": "body",
+      "schema": {
+        "$ref": "#/definitions/Chats-Messages"
       },
-      {
-        "name": "messages",
-        "in": "formData",
-        "type": "string",
-        "description": "Main reason of send message"
-      }
-  
-  
-  ],
+      "required": true,
+      "description": "Chats-Messages object"
+    }
+      ],
          
           "responses": {
             "201": {
@@ -139,35 +133,20 @@
           "summary": "Create a message",
           "description": "Create a message",
           "tags": ["Chats-Messages"],
-          "consumes": ["multipart/form-data"],
           "security":[
             {
           "Bearer":[]
              }
   ],
-  "parameters":[  {
-    "name": "sender",
-    "in": "formData",
-    "type": "string",
-    "description": "ID patient who is sending message"
-  },
-  {
-    "name": "message",
-    "in": "formData",
-    "type": "string",
-    "description": "Main reason of send message"
-  },
-  {
-    "name": "sentAt",
-    "in": "formData",
-    "type": "date",
-    "description": "message"
-  },
-  {
-      "name": "isRead",
-      "in": "formData",
-      "type": "boolean",
-      "description": "message"
+  "parameters":[  
+    {
+      "in": "body",
+      "name": "body",
+      "schema": {
+        "$ref": "#/definitions/Chats-Messages"
+      },
+      "required": true,
+      "description": "Chats-Messages object"
     }
       ],
          
@@ -183,44 +162,21 @@
           "summary": "Create a feedback",
           "description": "Create feedback",
           "tags": ["Feedbacks"],
-          "consumes": ["multipart/form-data"],
           "security":[
             {
           "Bearer":[]
              }
   ],
-  "parameters":[{
-    "name":"sender",
-    "in":"path",
-    "description":"ID of the message to send reply",
-    "required":"true",
-    "type":"string"
-    },
-      {
-        "name": "receiver",
-        "in": "formData",
-        "type": "string",
-        "description": "The id message  "
+  "parameters":[
+    {
+      "in": "body",
+      "name": "body",
+      "schema": {
+        "$ref": "#/definitions/Feedbacks"
       },
-      {
-        "name": "feedbackText",
-        "in": "formData",
-        "type": "string",
-        "description": "The  message  "
-      },
-      {
-        "name": "rating",
-        "in": "formData",
-        "type": "number",
-        "description": "The number message  "
-      },
-      {
-        "name": "status",
-        "in": "formData",
-        "type": "string",
-        "enum":"'pending', 'resolved'",
-        "description": "The id message  "
-      }
+      "required": true,
+      "description": "Feedbacks object"
+    }
      
      
       ],
@@ -261,11 +217,7 @@
           "summary": "Create a Doctor Account",
           "description": "Create a Doctor Account",
           "tags": ["Doctor"],
-          "security":[
-            {
-          "Bearer":[]
-             }
-  ],
+        
           "parameters": [
             
             {
@@ -381,7 +333,7 @@
         "post": {
           "summary": "Forgot Password",
           "description": "Forgot Password",
-          "tags": ["User"],
+          "tags": ["Authentication"],
           
           "parameters":[{
             "name":"body",
@@ -452,7 +404,7 @@
         "post": {
           "summary": "Logout",
           "description": "Logout",
-          "tags": ["User"],
+          "tags": ["Authentication"],
           "security":[
             {
           "Bearer":[]
@@ -978,7 +930,7 @@
                 "appointments": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Appointment"
+                    "$ref": "#/definitions/Appointments"
                   }
                 }
               }
@@ -1483,7 +1435,7 @@
              }
   ],
   "parameters":[{
-    "name":"feddbackId",
+    "name":"feedbackId",
     "in":"path",
     "description":"ID of the user to update Password",
     "required":"true",
@@ -1885,7 +1837,7 @@
               "schema": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/definitions/Notification"
+                  "$ref": "#/definitions/Notifications"
                 }
               }
             },
@@ -1915,7 +1867,7 @@
           "200": {
             "description": "Notification successfully updated",
             "schema": {
-              "$ref": "#/definitions/Notification"
+              "$ref": "#/definitions/Notifications"
             }
           },
           "404": {
@@ -2125,7 +2077,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FoodRecommendation"
+                "$ref": "#/definitions/Food Recommendations"
               }
             }
           }
@@ -2153,7 +2105,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FoodRecommendation"
+                    "$ref": "#/definitions/Food Recommendations"
                   }
                 }
               }
@@ -2181,7 +2133,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FoodRecommendation"
+                  "$ref": "#/definitions/Food Recommendations"
                 }
               }
             }
@@ -2210,7 +2162,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/FoodRecommendation"
+                "$ref": "#/definitions/Food Recommendations"
               }
             }
           }
@@ -2517,7 +2469,7 @@
   "required": ["patient", "doctor", "reason", "status","notes"],
   "additionalProperties": false
 },
-  "Chats": {
+  "Chats-Messages": {
   "type": "object",
       "description": "Details related to any loan-related communication (e.g., messages between the teacher and the loan officer).",
       "properties": {
@@ -2634,7 +2586,7 @@
     "required": ["patient", "chronicDiseases", "allergies", "medications","surgeries","familyHistory","lifestyle"],
     "additionalProperties": false
   },
-  "Report": {
+  "Reports": {
     "type": "object",
     "properties": {
           "patient": {
