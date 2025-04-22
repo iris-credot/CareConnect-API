@@ -48,8 +48,8 @@ const healthController = {
 
   // Get health record by patient ID
   getHealthByPatient: asyncWrapper(async (req, res, next) => {
-    const { patientId } = req.params;
-    const record = await Health.findOne({ patient: patientId })
+    const { healthId } = req.params;
+    const record = await Health.findOne({ patient: healthId })
       .populate('patient')
       .populate('medications.prescribedBy');
 
@@ -60,8 +60,8 @@ const healthController = {
 
   // Update health record by patient ID
   updateHealthRecord: asyncWrapper(async (req, res, next) => {
-    const { patientId } = req.params;
-    const updated = await Health.findOneAndUpdate({ patient: patientId }, req.body, {
+    const { healthId } = req.params;
+    const updated = await Health.findOneAndUpdate( healthId , req.body, {
       new: true,
       runValidators: true
     })
@@ -75,8 +75,8 @@ const healthController = {
 
   // Delete health record by patient ID
   deleteHealthRecord: asyncWrapper(async (req, res, next) => {
-    const { patientId } = req.params;
-    const deleted = await Health.findOneAndDelete({ patient: patientId });
+    const { healthId } = req.params;
+    const deleted = await Health.findOneAndDelete(healthId);
 
     if (!deleted) return next(new NotFound('Health record not found'));
 
