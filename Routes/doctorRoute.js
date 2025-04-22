@@ -9,7 +9,7 @@ Doctorrouter.get('/all' ,auth.adminJWT,authController.getAllDoctors);
 Doctorrouter.delete('/delete/:id',auth.adminJWT, authController.deleteDoctor);
 Doctorrouter.put('/put/:id', auth.BothJWT,authController.updateDoctor);
 Doctorrouter.get('/getdoctor/:id', auth.adminJWT,authController.getDoctorById);
-Doctorrouter.get('/getDoctorPatients/:id', auth.BothJWT,authController.getDoctorPatients);
+Doctorrouter.get('/getDoctorPatients/:doctorid', auth.BothJWT,authController.getDoctorPatients);
 
 
 module.exports = Doctorrouter;

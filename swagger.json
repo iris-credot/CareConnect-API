@@ -366,11 +366,19 @@
           "summary": "Reset Password",
           "description": "Reset Password",
           "tags": ["Authentication"],
-          "parameters":[{
-            "name":"body",
-            "in":"body",
-            "description":"User details",
-            "required":"true",
+          "parameters":[
+            {
+              "name": "token",
+              "in": "path",
+              "description": "ID of the Patient to retrieve",
+              "required": true,
+              "type": "string"
+            }
+         ],
+         "requestBody":{
+                      "required":"true",
+                      "content": {
+                        "application/json": {
             "schema":{
                 "type":"object",
                 "properties":{
@@ -390,9 +398,10 @@
                     "minLength": [8,"Must be at least 8 characters"]
                     }
                       
-                }
+                
             }
-        }],
+        }}}
+         },
           "responses": {
             "201": {
               "description": "Password Reseted"
