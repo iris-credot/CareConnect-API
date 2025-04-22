@@ -5,10 +5,10 @@ const appointmentController = require('../Controllers/AppointmentController');
 
 Appointmentrouter.post('/create', auth.BothJWT, appointmentController.createAppointment);
 Appointmentrouter.get('/all', auth.BothJWT, appointmentController.getAllAppointments);
-Appointmentrouter.get('/get/:id', auth.BothJWT, appointmentController.getAppointmentById);
+Appointmentrouter.get('/get/:id', auth.AuthJWT, appointmentController.getAppointmentById);
 Appointmentrouter.put('/update/:id', auth.BothJWT, appointmentController.updateAppointment);
-Appointmentrouter.delete('/delete/:id', auth.BothJWT, appointmentController.deleteAppointment);
-Appointmentrouter.get('/filter', auth.BothJWT, appointmentController.filterAppointments);
-Appointmentrouter.put('/status/:id', auth.BothJWT, appointmentController.changeAppointmentStatus);
+Appointmentrouter.delete('/delete/:id', auth.AuthJWT, appointmentController.deleteAppointment);
+Appointmentrouter.get('/filter', auth.AuthJWT, appointmentController.filterAppointments);
+Appointmentrouter.put('/status/:id', auth.AuthJWT, appointmentController.changeAppointmentStatus);
 
 module.exports = Appointmentrouter;
