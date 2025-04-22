@@ -1,5 +1,5 @@
 
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const FoodRecommendationSchema = new mongoose.Schema({
     patient: {
       type: mongoose.Schema.Types.ObjectId,
@@ -22,5 +22,6 @@ const FoodRecommendationSchema = new mongoose.Schema({
     }
   });
   const FoodRecommendation = mongoose.model('FoodRecommendation', FoodRecommendationSchema);
-export default FoodRecommendation;
+
+module.exports = FoodRecommendation;
   

@@ -10,4 +10,4 @@ sportsrouter.put('/update/:id',auth.BothJWT,sportsController.updateSportRecommen
 sportsrouter.delete('/delete/:id',auth.AuthJWT,sportsController.deleteSportRecommendation);
 
 
-module.exports = Appointmentrouter;
+module.exports = sportsrouter;
