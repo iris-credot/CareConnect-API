@@ -78,6 +78,7 @@ const patientController = {
   getPatientByUserId: asyncWrapper(async (req, res, next) => {
     const { userId } = req.params;
     const patient = await patientModel.findOne({ user: userId }).populate('user');
+    console.log('Received userId:', userId);
 
     if (!patient) {
       return next(new NotFound('Patient not found for the given user'));
