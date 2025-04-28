@@ -19,11 +19,6 @@ const feedbackSchema = new mongoose.Schema({
     type: Number,  // This can be an optional field for giving ratings (e.g., 1-5)
     min: 1,
     max: 5,
-  },
-  status: {
-    type: String,
-    enum: ['pending', 'resolved',, 'Completed', 'Cancelled'],
-    default: 'pending',
   }
 }, { timestamps: true });
 
