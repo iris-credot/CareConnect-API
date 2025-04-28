@@ -8,6 +8,7 @@ Appointmentrouter.get('/all', auth.BothJWT, appointmentController.getAllAppointm
 Appointmentrouter.get('/get/:id', auth.AuthJWT, appointmentController.getAppointmentById);
 Appointmentrouter.put('/update/:id', auth.BothJWT, appointmentController.updateAppointment);
 Appointmentrouter.delete('/delete/:id', auth.AuthJWT, appointmentController.deleteAppointment);
+Appointmentrouter.get('/byPatient/:id', auth.AuthJWT, appointmentController.getAppointmentsByPatientId);
 Appointmentrouter.get('/filter', auth.AuthJWT, appointmentController.filterAppointments);
 Appointmentrouter.put('/status/:id', auth.AuthJWT, appointmentController.changeAppointmentStatus);
 

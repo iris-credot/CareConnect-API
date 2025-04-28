@@ -141,6 +141,21 @@ const appointmentController = {
 
     res.status(200).json({ message: 'Status updated successfully', appointment: updatedAppointment });
   }),
+  // Get appointments by patient ID
+    getAppointmentsByPatientId: asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+
+  const appointments = await Appointment.find({ patient: id })
+    .populate('patient')
+    .populate('doctor');
+
+  if (!appointments || appointments.length === 0) {
+    return next(new NotFound(`No appointments found for patient ID ${patientId}`));
+  }
+
+  res.status(200).json({ appointments });
+}),
+
 };
 
 module.exports = appointmentController;
