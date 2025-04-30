@@ -19,10 +19,9 @@ lastName: {
   image: {
     type: String
 },
-  profile: {
-      names: { type: String },
-      bio: { type: String },
-      avatar: { type: String }
+  bio: {
+    type: String
+     
   },
   role: {
       type: String,
