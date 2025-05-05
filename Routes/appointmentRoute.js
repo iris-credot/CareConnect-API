@@ -7,9 +7,11 @@ Appointmentrouter.post('/create', auth.BothJWT, appointmentController.createAppo
 Appointmentrouter.get('/all', auth.BothJWT, appointmentController.getAllAppointments);
 Appointmentrouter.get('/get/:id', auth.AuthJWT, appointmentController.getAppointmentById);
 Appointmentrouter.put('/update/:id', auth.BothJWT, appointmentController.updateAppointment);
-Appointmentrouter.delete('/delete/:id', auth.AuthJWT, appointmentController.deleteAppointment);
+Appointmentrouter.delete('/delete/:id', auth.adminJWT, appointmentController.deleteAppointment);
 Appointmentrouter.get('/byPatient/:id', auth.AuthJWT, appointmentController.getAppointmentsByPatientId);
 Appointmentrouter.get('/filter', auth.AuthJWT, appointmentController.filterAppointments);
 Appointmentrouter.put('/status/:id', auth.AuthJWT, appointmentController.changeAppointmentStatus);
+router.put('/appointments/:id/reschedule', appointmentController.rescheduleAppointment);
+router.put('/appointments/:id/approve-deny', appointmentController.respondToRescheduleRequest);
 
 module.exports = Appointmentrouter;

@@ -19,13 +19,25 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true 
   },
+newDate: {
+    type: Date,
+    
+  },
+  newTimeSlot: {
+    type: String,
+   
+  },
   reason: {
     type: String
   },
   status: {
     type: String,
-    enum: ['Pending', 'Completed', 'Cancelled'],
+    enum: ['Pending','Confirmed', 'Completed', 'Cancelled','Rescheduled','Denied'],
     default: 'Pending'
+  },
+  action:{
+    type: String,
+    enum:['accept','deny']
   },
   notes: {
     type: String 

@@ -125,7 +125,7 @@ const appointmentController = {
     const { id } = req.params;
     const { status } = req.body;
 
-    if (!['Pending', 'Confirmed', 'Completed', 'Cancelled'].includes(status)) {
+    if (!['Pending','Confirmed', 'Completed', 'Cancelled','Rescheduled','Denied'].includes(status)) {
       return next(new BadRequest('Invalid status value.'));
     }
 
@@ -155,6 +155,114 @@ const appointmentController = {
 
   res.status(200).json({ appointments });
 }),
+ rescheduleAppointment: asyncWrapper(async (req, res, next) => {
+    const { id } = req.params;
+    const { newDate, newTimeSlot } = req.body;
+
+    // Ensure both newDate and newTimeSlot are provided
+    if (!newDate || !newTimeSlot) {
+      return next(new BadRequest('Missing required fields: newDate or newTimeSlot.'));
+    }
+
+    // Find the original appointment
+    const originalAppointment = await Appointment.findById(id);
+
+    if (!originalAppointment) {
+      return next(new NotFound(`No appointment found with ID ${id}`));
+    }
+
+    // Update the appointment with new date, new time slot, and change status to Rescheduled
+    originalAppointment.newDate = newDate;
+    originalAppointment.newTimeSlot = newTimeSlot;
+    originalAppointment.status = 'Rescheduled';
+
+    const updatedAppointment = await originalAppointment.save();
+
+    // Notify both patient and doctor
+    await Promise.all([
+      sendNotification({
+        user: updatedAppointment.patient,
+        message:'Your appointment reschedule request is pending confirmation.',
+        type: 'appointment',
+      }),
+      sendNotification({
+        user: updatedAppointment.doctor,
+        message: 'A patient has requested to reschedule an appointment.',
+        type: 'appointment',
+      }),
+    ]);
+
+    res.status(200).json({
+      message: 'Appointment rescheduled successfully',
+      appointment: updatedAppointment,
+    });
+  }),
+  respondToRescheduleRequest: asyncWrapper(async (req, res, next) => {
+    const { id } = req.params;
+    const { action } = req.body; // action = "accept" or "deny"
+  
+    if (!['accept', 'deny'].includes(action)) {
+      return next(new BadRequest('Invalid action. Must be "accept" or "deny".'));
+    }
+  
+    const appointment = await Appointment.findById(id);
+    if (!appointment) {
+      return next(new NotFound(`No appointment found with ID ${id}`));
+    }
+  
+    if (!appointment.newDate || !appointment.newTimeSlot) {
+      return next(new BadRequest('No reschedule request found for this appointment.'));
+    }
+  
+    if (action === 'accept') {
+      // Move newDate/timeSlot into original ones
+      appointment.date = appointment.newDate;
+      appointment.timeSlot = appointment.newTimeSlot;
+      appointment.status = 'Confirmed';
+      appointment.newDate = undefined;
+      appointment.newTimeSlot = undefined;
+  
+      await appointment.save();
+  
+      await Promise.all([
+        sendNotification({
+          user: appointment.patient,
+          message: `Your reschedule request has been accepted. New appointment: ${appointment.date} at ${appointment.timeSlot}`,
+          type: 'appointment',
+        }),
+        sendNotification({
+          user: appointment.doctor,
+          message: 'You accepted a reschedule request.',
+          type: 'appointment',
+        }),
+      ]);
+  
+      return res.status(200).json({ message: 'Reschedule accepted.', appointment });
+    }
+  
+    if (action === 'deny') {
+      appointment.status = 'Denied';
+      appointment.newDate = undefined;
+      appointment.newTimeSlot = undefined;
+  
+      await appointment.save();
+  
+      await Promise.all([
+        sendNotification({
+          user: appointment.patient,
+          message: 'Your reschedule request has been denied.',
+          type: 'appointment',
+        }),
+        sendNotification({
+          user: appointment.doctor,
+          message: 'You denied a reschedule request.',
+          type: 'appointment',
+        }),
+      ]);
+  
+      return res.status(200).json({ message: 'Reschedule denied.', appointment });
+    }
+  }),
 
 };
 
