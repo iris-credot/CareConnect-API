@@ -11,7 +11,7 @@ Appointmentrouter.delete('/delete/:id', auth.adminJWT, appointmentController.del
 Appointmentrouter.get('/byPatient/:id', auth.AuthJWT, appointmentController.getAppointmentsByPatientId);
 Appointmentrouter.get('/filter', auth.AuthJWT, appointmentController.filterAppointments);
 Appointmentrouter.put('/status/:id', auth.AuthJWT, appointmentController.changeAppointmentStatus);
-Appointmentrouter.put('/appoint/:id/reschedule', appointmentController.rescheduleAppointment);
-Appointmentrouter.put('/appoint/:id/reply', appointmentController.respondToRescheduleRequest);
+Appointmentrouter.put('/appoint/:id/reschedule', auth.AuthJWT,appointmentController.rescheduleAppointment);
+Appointmentrouter.put('/appoint/:id/reply',auth.BothJWT, appointmentController.respondToRescheduleRequest);
 
 module.exports = Appointmentrouter;
