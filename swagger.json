@@ -1074,6 +1074,22 @@
         "schema": {
           "type": "string"
         }
+      },
+      {
+        "name": "body",
+        "in": "body",
+        "description": "Appointment details",
+        "required": true,
+        "schema": {
+          "type": "object",
+  "properties": {
+    
+  
+    "status": {
+      "type": "string"
+    }
+  }
+        }
       }
     ],
     "requestBody": {
@@ -1131,7 +1147,196 @@
       }
     }
   }
-},     
+},   
+"/api/appointment/appoint/{id}/reschedule": {
+  "put": {
+    "summary": "Reschedule Appointment ",
+    "description": "Update the date of an existing appointment by its ID.",
+    "tags": ["Appointments"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the appointment to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "body",
+        "in": "body",
+        "description": "Appointment details",
+        "required": true,
+        "schema": {
+          "type": "object",
+  "properties": {
+    
+  
+    "newDate": {
+      "type": "Date"
+    },
+    "newTimeSlot": {
+      "type": "string"
+    }
+  }
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+           "properties": {
+              "patient": {
+                "type": "string",
+                "description": "ID of the patient"
+              },
+              "doctor": {
+                "type": "string",
+                "description": "ID of the doctor"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date of appointment"
+              },
+              "timeSlot": {
+                "type": "string",
+                "description": "Time slot for the appointment"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Reason for the appointment"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+                "description": "Status of the appointment"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes"
+              }
+            },
+            "required": ["status"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Appointment status updated successfully"
+      },
+      "404": {
+        "description": "Appointment not found"
+      },
+      "400": {
+        "description": "Invalid status value"
+      }
+    }
+  }
+},  
+"/api/appointment/appoint/{id}/reply": {
+  "put": {
+    "summary": "Reply to the Reschedule Appointment ",
+    "description": "Update the date of an existing appointment by its ID.",
+    "tags": ["Appointments"],
+    "security": [
+      {
+        "Bearer": []
+      }
+    ],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "ID of the appointment to update",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "body",
+        "in": "body",
+        "description": "Appointment details",
+        "required": true,
+        "schema": {
+          "type": "object",
+  "properties": {
+    
+  
+    "action": {
+      "type": "string"
+    }
+  }
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+           "properties": {
+              "patient": {
+                "type": "string",
+                "description": "ID of the patient"
+              },
+              "doctor": {
+                "type": "string",
+                "description": "ID of the doctor"
+              },
+              "date": {
+                "type": "string",
+                "format": "date",
+                "description": "Date of appointment"
+              },
+              "timeSlot": {
+                "type": "string",
+                "description": "Time slot for the appointment"
+              },
+              "reason": {
+                "type": "string",
+                "description": "Reason for the appointment"
+              },
+              "status": {
+                "type": "string",
+                "enum": ["Pending", "Confirmed", "Completed", "Cancelled"],
+                "description": "Status of the appointment"
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional notes"
+              }
+            },
+            "required": ["status"]
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Appointment status updated successfully"
+      },
+      "404": {
+        "description": "Appointment not found"
+      },
+      "400": {
+        "description": "Invalid status value"
+      }
+    }
+  }
+}, 
      "/api/chat/read/{chatId}": {
   "put": {
     "summary": "Mark all messages as read in a chat",
