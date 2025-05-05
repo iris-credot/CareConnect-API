@@ -904,7 +904,7 @@
         }
       },
       
-  "/api/appointments/filter": {
+  "/api/appointment/filter": {
   "get": {
     "summary": "Filter Appointments",
     "description": "Filter appointments by doctor ID, patient ID, status, or date.",
@@ -1216,7 +1216,7 @@
     }
   }
 }, 
-     "/api/chat/read/{chatId}": {
+"/api/chat/read/{chatId}": {
   "put": {
     "summary": "Mark all messages as read in a chat",
     "description": "Marks all messages as read for the specified user in a given chat.",
@@ -1283,7 +1283,7 @@
     }
   }
 },
-      "/api/user/profile/{id}": {
+"/api/user/profile/{id}": {
   "put": {
     "summary": "Update User Account",
     "description": "Update a user's account information by ID.",
