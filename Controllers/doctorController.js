@@ -46,6 +46,10 @@ const doctorController = {
       availableSlots,
       patients,
     });
+    if (foundUser.role !== 'doctor') {
+      foundUser.role = 'doctor';
+      await foundUser.save();
+    }
 
     res.status(201).json({ message: 'Doctor created successfully', doctor: newDoctor });
   }),

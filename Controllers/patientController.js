@@ -44,6 +44,10 @@ const patientController = {
       weight,
       height,
     });
+    if (userId.role !== 'patient') {
+      userId.role = 'patient';
+      await userId.save();
+    }
 
     res.status(201).json({ patient });
   }),
