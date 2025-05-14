@@ -206,8 +206,8 @@ const userController ={
       return res.status(400).json({ message: 'Passwords do not match' });
     }
   
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(newPassword, salt);
+    
+    user.password = newPassword;
     await user.save();
   
     await otpModel.deleteOne({ _id: otpRecord._id });
