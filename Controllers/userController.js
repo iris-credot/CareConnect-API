@@ -80,6 +80,15 @@ const userController ={
           return next(new Badrequest('Error uploading image to Cloudinary.'));
         }
     }),
+      getUserById: asyncWrapper(async (req, res, next) => {
+        const { id } = req.params;
+        const user = await userModel.findById(id);
+    
+      
+    
+        res.status(200).json({ user });
+      }),
+    
     
     
     OTP: asyncWrapper(async(req,res,next) =>{

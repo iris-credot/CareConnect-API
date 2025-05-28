@@ -8,9 +8,9 @@ const {sendNotification}  = require('./notificationController');
 const appointmentController = {
   // Create a new appointment
   createAppointment: asyncWrapper(async (req, res, next) => {
-    const { patient, doctor, date, timeSlot, reason, status, notes } = req.body;
+    const {user, patient, doctor, date, timeSlot, reason, status, notes } = req.body;
 
-    if (!patient || !doctor || !date || !timeSlot) {
+    if (!user || !patient || !doctor || !date || !timeSlot) {
       return next(new BadRequest('Missing required fields: patient, doctor, date, or timeSlot.'));
     }
 
