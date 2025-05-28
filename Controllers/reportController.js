@@ -25,7 +25,6 @@ const reportController = {
     
     res.status(201).json({ message: 'Report created successfully', data: savedReport });
   }),
-
   // Get all reports
   getAllReports: asyncWrapper(async (req, res) => {
     const reports = await Report.find()

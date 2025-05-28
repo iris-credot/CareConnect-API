@@ -29,7 +29,6 @@ const foodRecommendationController = {
 
     res.status(201).json({ message: 'Recommendation created successfully', recommendation: savedRecommendation });
   }),
-
   // Get all food recommendations
   getAllRecommendations: asyncWrapper(async (req, res, next) => {
     const recommendations = await FoodRecommendation.find().populate('patient');

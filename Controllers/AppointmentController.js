@@ -178,7 +178,7 @@ const appointmentController = {
 
     const updatedAppointment = await originalAppointment.save();
 
-    // Notify both patient and doctor
+    // Notify both patient and docto
     await Promise.all([
       sendNotification({
         user: updatedAppointment.patient,

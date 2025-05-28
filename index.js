@@ -15,12 +15,12 @@ const AllRoutes = require('./Routes/app');
 app.use(express.json());
 app.use(cookieParser());
 app.use('/careConnect', swaggerUi.serve, swaggerUi.setup(swagger))
-// app.use(cors({
-//     origin: ["https://loanhub-frontend.onrender.com","https://loanhub-frontend-xity.onrender.com"],
-//     credentials: true,
-//     allowedHeaders: ['Content-Type', 'Authorization'],
-//     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
-//  }));
+ app.use(cors({
+    origin: ["http://localhost:5173",],
+     credentials: true,
+     allowedHeaders: ['Content-Type', 'Authorization'],
+     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
+ }));
 mongoose.connect(connection)
 .then(() => {
     app.listen(port, () =>{

@@ -20,7 +20,7 @@ const userController ={
         const users = await userModel.find({})
         res.status(200).json({ users })
       }),
-    
+  
 
     createUser: asyncWrapper(async (req, res, next) => {
       const {

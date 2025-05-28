@@ -51,7 +51,6 @@ await sendNotification({
 
     res.status(200).json({ recommendation });
   }),
-
   // Update a sport recommendation
   updateSportRecommendation: asyncWrapper(async (req, res, next) => {
     const { id } = req.params;

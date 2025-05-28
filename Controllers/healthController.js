@@ -28,7 +28,6 @@ const healthController = {
       lifestyle,
       updatedAt: new Date() // or use req.body.updatedAt if you want to keep it from input
     });
-  
     const saved = await newRecord.save();
   
     await sendNotification({
