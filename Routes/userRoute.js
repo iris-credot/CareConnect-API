@@ -13,7 +13,7 @@ Userrouter.post('/forgot', authController.ForgotPassword);
 Userrouter.post('/verifyotp', authController.OTP);
 Userrouter.post('/logout', login.logout);
 Userrouter.get('/all' ,auth.adminJWT,authController.getAllUsers);
-Userrouter.get('/getOne/:id' ,auth,authController.getUserById);
+Userrouter.get('/getOne/:id' ,auth.AuthJWT,authController.getUserById);
 Userrouter.delete('/delete/:id',auth.adminJWT, authController.deleteUser);
 Userrouter.put('/profile/:id', auth.AuthJWT,authController.updateUser);
 Userrouter.put('/password', auth.AuthJWT,authController.UpdatePassword);
