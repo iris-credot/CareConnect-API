@@ -15,6 +15,7 @@ const appointmentController = {
     }
 
     const appointment = new Appointment({
+      user,
       patient,
       doctor,
       date,
@@ -44,7 +45,9 @@ const appointmentController = {
   getAllAppointments: asyncWrapper(async (req, res, next) => {
     const appointments = await Appointment.find()
       .populate('patient')
+      .populate('user')
       .populate('doctor');
+
     res.status(200).json({ appointments });
   }),
 
@@ -53,6 +56,7 @@ const appointmentController = {
     const { id } = req.params;
     const appointment = await Appointment.findById(id)
       .populate('patient')
+       .populate('user')
       .populate('doctor');
 
     if (!appointment) {
@@ -115,6 +119,7 @@ const appointmentController = {
 
     const appointments = await Appointment.find(filter)
       .populate('patient')
+       .populate('user')
       .populate('doctor');
 
     res.status(200).json({ appointments });
