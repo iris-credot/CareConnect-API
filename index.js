@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-// const cors = require('cors');
+ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const dotenv= require('dotenv');
 dotenv.config();
