@@ -10,7 +10,7 @@ const appointmentController = {
   createAppointment: asyncWrapper(async (req, res, next) => {
     const {user, patient, doctor, date, timeSlot, reason, status, notes } = req.body;
 
-    if (!user || !patient || !doctor || !date || !timeSlot) {
+    if ( !patient || !doctor || !date || !timeSlot) {
       return next(new BadRequest('Missing required fields: patient, doctor, date, or timeSlot.'));
     }
 
