@@ -155,7 +155,7 @@ const appointmentController = {
     .populate('doctor');
 
   if (!appointments || appointments.length === 0) {
-    return next(new NotFound(`No appointments found for patient ID ${patientId}`));
+    return next(new NotFound(`No appointments found for patient ID ${id}`));
   }
 
   res.status(200).json({ appointments });
