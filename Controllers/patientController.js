@@ -81,14 +81,21 @@ const patientController = {
   // Get patient by userId
   getPatientByUserId: asyncWrapper(async (req, res, next) => {
     const { userId } = req.params;
+
+    // Validate userId format
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return next(new BadRequest('Invalid userId format'));
+    }
+
+    console.log('Querying patient with userId:', userId);
+
     const patient = await patientModel.findOne({ user: userId }).populate('user');
-    console.log('Received userId:', userId);
 
     if (!patient) {
       return next(new NotFound('Patient not found for the given user'));
     }
 
-    res.status(200).json({ patient });
+    res.status(200).json({ success: true, patient });
   }),
     getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
     const { userId } = req.params;
