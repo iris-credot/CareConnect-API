@@ -203,7 +203,7 @@ const appointmentController = {
     });
   }),
   getAppointmentsByUserId: asyncWrapper(async (req, res, next) => {
-  const { id } = req.params;  // patient ID from route params
+  const { userId } = req.params;  // patient ID from route params
 
   // Find all appointments where patient field matches id, populate patient and doctor refs
   const appointments = await Appointment.find({ user: id })
