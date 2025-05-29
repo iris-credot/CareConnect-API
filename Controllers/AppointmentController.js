@@ -160,6 +160,19 @@ const appointmentController = {
 
   res.status(200).json({ appointments });
 }),
+  getAppointmentsByDoctorId: asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;
+
+  const appointments = await Appointment.find({ doctor: id })
+    .populate('patient')
+    .populate('doctor');
+
+  if (!appointments || appointments.length === 0) {
+    return next(new NotFound(`No appointments found for doctor ID ${id}`));
+  }
+
+  res.status(200).json({ appointments });
+}),
  rescheduleAppointment: asyncWrapper(async (req, res, next) => {
     const { id } = req.params;
     const { newDate, newTimeSlot } = req.body;

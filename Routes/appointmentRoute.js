@@ -10,6 +10,7 @@ Appointmentrouter.put('/update/:id', auth.BothJWT, appointmentController.updateA
 Appointmentrouter.delete('/delete/:id', auth.adminJWT, appointmentController.deleteAppointment);
 Appointmentrouter.get('/byPatient/:id', auth.AuthJWT, appointmentController.getAppointmentsByPatientId);
 Appointmentrouter.get('/byUser/:userId', auth.AuthJWT, appointmentController.getAppointmentsByUserId);
+Appointmentrouter.get('/byDoctor/:userId', auth.AuthJWT, appointmentController.getAppointmentsByDoctorId);
 Appointmentrouter.get('/filter', auth.AuthJWT, appointmentController.filterAppointments);
 Appointmentrouter.put('/status/:id', auth.AuthJWT, appointmentController.changeAppointmentStatus);
 Appointmentrouter.put('/appoint/:id/reschedule', auth.AuthJWT,appointmentController.rescheduleAppointment);
