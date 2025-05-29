@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use('/careConnect', swaggerUi.serve, swaggerUi.setup(swagger))
  app.use(cors({
-    origin: ["http://localhost:5173","http://localhost:5174"],
+    origin: ["http://localhost:5173","http://localhost:5174","https://careconnect-frontend-33ni.onrender.com"],
      credentials: true,
      allowedHeaders: ['Content-Type', 'Authorization'],
      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
