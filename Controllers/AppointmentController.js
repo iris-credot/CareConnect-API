@@ -202,6 +202,22 @@ const appointmentController = {
       appointment: updatedAppointment,
     });
   }),
+  getAppointmentsByUserId: asyncWrapper(async (req, res, next) => {
+  const { id } = req.params;  // patient ID from route params
+
+  // Find all appointments where patient field matches id, populate patient and doctor refs
+  const appointments = await Appointment.find({ user: id })
+  .populate('user')
+    .populate('patient')
+    .populate('doctor');
+
+  if (!appointments || appointments.length === 0) {
+    return next(new NotFound(`No appointments found for patient ID ${id}`));
+  }
+
+  res.status(200).json({ appointments });
+}),
+
   respondToRescheduleRequest: asyncWrapper(async (req, res, next) => {
     const { id } = req.params;
     const { action } = req.body; // action = "accept" or "deny"
