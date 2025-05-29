@@ -33,6 +33,15 @@ await sendNotification({
       sportRecommendation: savedSportRecommendation,
     });
   }),
+  // Get sport recommendations by patient ID
+getSportRecommendationsByPatient: asyncWrapper(async (req, res, next) => {
+  const { patientId } = req.params;
+
+  const recommendations = await SportRecommendation.find({ patient: patientId });
+
+  res.status(200).json({ recommendations });
+}),
+
 
   // Get all sport recommendations
   getAllSportRecommendations: asyncWrapper(async (req, res, next) => {

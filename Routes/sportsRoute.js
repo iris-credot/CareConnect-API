@@ -8,6 +8,8 @@ sportsrouter.get('/all',auth.BothJWT,sportsController.getAllSportRecommendations
 sportsrouter.get('/get/:id',auth.AuthJWT,sportsController.getSportRecommendationById);
 sportsrouter.put('/update/:id',auth.BothJWT,sportsController.updateSportRecommendation);
 sportsrouter.delete('/delete/:id',auth.AuthJWT,sportsController.deleteSportRecommendation);
+sportsrouter.get('/patient/:patientId', auth.BothJWT, sportsController.getRecommendationsByPatientId);
+
 
 
 module.exports = sportsrouter;
