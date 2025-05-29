@@ -9,6 +9,7 @@ Patientrouter.get('/all' ,auth.BothJWT,authController.getAllPatients);
 Patientrouter.put('/profile/:id', auth.AuthJWT,authController.updatePatient);
 Patientrouter.get('/getPatient/:userId', auth.AuthJWT,authController.getPatientById);
 Patientrouter.get('/getPatientByUser/:userId', auth.AuthJWT,authController.getPatientByUserId);
+Patientrouter.get('/getPatientByDoctor/:userId', auth.AuthJWT,authController.getPatientByDoctorId);
 Patientrouter.delete('/delete/:id', auth.AuthJWT,authController.deletePatient);
 
 
