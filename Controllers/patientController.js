@@ -78,36 +78,41 @@ const patientController = {
     res.status(200).json({ message: 'Patient deleted successfully', patient: deletedPatient });
   }),
 
-  // Get patient by userId
-  getPatientByUserId: asyncWrapper(async (req, res, next) => {
-    const { userId } = req.params;
+getPatientByUserId: asyncWrapper(async (req, res, next) => {
+  const { userId } = req.params;
 
-    // Validate userId format
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-      return next(new BadRequest('Invalid userId format'));
-    }
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return next(new BadRequest('Invalid userId format'));
+  }
 
-    console.log('Querying patient with userId:', userId);
+  console.log('Querying patient with userId:', userId);
 
-    const patient = await patientModel.find({ user: userId }).populate('user');
+  const patients = await patientModel.find({ user: userId }).populate('user');
 
-    if (!patient) {
-      return next(new NotFound('Patient not found for the given user'));
-    }
+  if (!patients || patients.length === 0) {
+    return next(new NotFound('No patients found for the given user'));
+  }
 
-    res.status(200).json({ success: true, patient });
-  }),
-    getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
-    const { userId } = req.params;
-    const patient = await patientModel.find({ doctor: userId }).populate('doctor');
-    console.log('Received userId:', userId);
+  res.status(200).json({ success: true, patients }); // plural key
+}),
 
-    if (!patient) {
-      return next(new NotFound('Patient not found for the given user'));
-    }
+getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
+  const { userId } = req.params;
 
-    res.status(200).json({ patient });
-  })
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return next(new BadRequest('Invalid userId format'));
+  }
+
+  console.log('Received doctor userId:', userId);
+
+  const patients = await patientModel.find({ doctor: userId }).populate('doctor');
+
+  if (!patients || patients.length === 0) {
+    return next(new NotFound('No patients found for the given doctor'));
+  }
+
+  res.status(200).json({ success: true, patients }); // Use plural key
+})
 };
 
 module.exports = patientController;
