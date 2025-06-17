@@ -99,14 +99,17 @@ getPatientByUserId: asyncWrapper(async (req, res, next) => {
 }),
 
 getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
-   try {
-    const { userId } = req.params;
+  try {
+    const { doctorId } = req.params;
 
-    const doctorId = new mongoose.Types.ObjectId(userId); // ✅ convert to ObjectId
+    const objectId = new mongoose.Types.ObjectId(doctorId); // ✅ ensure it's an ObjectId
 
-    console.log("Received doctor userId:", userId);
+    console.log("Received doctor _id:", doctorId);
 
-    const patients = await patientModel.find({ doctor: doctorId }).populate('user').populate('doctor');
+    const patients = await patientModel
+      .find({ doctor: objectId })
+      .populate('user')
+      .populate('doctor');
 
     if (!patients.length) {
       return res.status(404).json({ message: "No patients found for the given doctor" });

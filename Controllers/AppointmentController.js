@@ -38,6 +38,7 @@ const appointmentController = {
           user: patient,
           message: 'You have a new appointment scheduled.',
           type: 'appointment'
+          
         }),
         sendNotification({
           user: doctor,

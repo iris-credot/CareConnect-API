@@ -21,16 +21,19 @@ const doctorController = {
     res.status(200).json({ doctor });
   }),
   getDoctorByUserId: asyncWrapper(async (req, res, next) => {
-      const { userId } = req.params;
-      const doctor = await Doctor.findOne({ user: userId }).populate('user');
-      console.log('Received userId:', userId);
-  
-      if (!doctor) {
-        return next(new NotFound('Doctor not found for the given user'));
-      }
-  
-      res.status(200).json({ doctor });
-    }),
+  try {
+    const { userId } = req.params;
+    const doctor = await doctorModel.findOne({ user: userId });
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+    res.status(200).json(doctor);
+  } catch (error) {
+    console.error("Error fetching doctor:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}),
+ 
   // Create a new doctor profile (after user registration)
   createDoctor: asyncWrapper(async (req, res, next) => {
     const { user, licenseNumber, specialization, yearsOfExperience, hospital, availableSlots, patients } = req.body;
