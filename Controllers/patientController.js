@@ -99,21 +99,24 @@ getPatientByUserId: asyncWrapper(async (req, res, next) => {
 }),
 
 getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
-  const { userId } = req.params;
+   try {
+    const { userId } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(userId)) {
-    return next(new BadRequest('Invalid userId format'));
+    const doctorId = new mongoose.Types.ObjectId(userId); // ✅ convert to ObjectId
+
+    console.log("Received doctor userId:", userId);
+
+    const patients = await patientModel.find({ doctor: doctorId }).populate('user').populate('doctor');
+
+    if (!patients.length) {
+      return res.status(404).json({ message: "No patients found for the given doctor" });
+    }
+
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error("Error fetching patients by doctor:", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
   }
-
-  console.log('Received doctor userId:', userId);
-
-  const patients = await patientModel.find({ doctor: userId }).populate('doctor');
-
-  if (!patients || patients.length === 0) {
-    return next(new NotFound('No patients found for the given doctor'));
-  }
-
-  res.status(200).json({ success: true, patients }); // Use plural key
 })
 };
 
