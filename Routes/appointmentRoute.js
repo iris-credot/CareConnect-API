@@ -7,7 +7,7 @@ Appointmentrouter.post('/create', auth.BothJWT, appointmentController.createAppo
 Appointmentrouter.get('/all', auth.BothJWT, appointmentController.getAllAppointments);
 Appointmentrouter.get('/get/:id', auth.AuthJWT, appointmentController.getAppointmentById);
 Appointmentrouter.put('/update/:id', auth.BothJWT, appointmentController.updateAppointment);
-Appointmentrouter.delete('/delete/:id', auth.adminJWT, appointmentController.deleteAppointment);
+Appointmentrouter.delete('/delete/:id', auth.BothJWT, appointmentController.deleteAppointment);
 Appointmentrouter.get('/byPatient/:id', auth.AuthJWT, appointmentController.getAppointmentsByPatientId);
 Appointmentrouter.get('/byUser/:userId', auth.AuthJWT, appointmentController.getAppointmentsByUserId);
 Appointmentrouter.get('/byDoctor/:userId', auth.AuthJWT, appointmentController.getAppointmentsByDoctorId);
