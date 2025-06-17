@@ -89,7 +89,7 @@ const patientController = {
 
     console.log('Querying patient with userId:', userId);
 
-    const patient = await patientModel.findOne({ user: userId }).populate('user');
+    const patient = await patientModel.find({ user: userId }).populate('user');
 
     if (!patient) {
       return next(new NotFound('Patient not found for the given user'));
