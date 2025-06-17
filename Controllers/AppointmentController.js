@@ -1,5 +1,7 @@
 const asyncWrapper = require('../Middleware/async');
 const Appointment = require('../Models/appointments');
+const patientModel= require('../Models/Patient');
+const Doctor= require('../Models/Doctor');
 const BadRequest = require('../Error/BadRequest');
 const NotFound = require('../Error/NotFound');
 const {sendNotification}  = require('./notificationController');
@@ -26,6 +28,11 @@ const appointmentController = {
     });
 
     const savedAppointment = await appointment.save();
+      // Update patient to set doctor (overwrite or set if empty)
+  await patientModel.findByIdAndUpdate(patient, { doctor: doctor });
+
+  // Update doctor to add patient to patients array if not already added
+  await Doctor.findByIdAndUpdate(doctor, { $addToSet: { patients: patient } });
     await Promise.all([
         sendNotification({
           user: patient,
