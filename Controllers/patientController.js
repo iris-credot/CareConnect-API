@@ -99,7 +99,7 @@ const patientController = {
   }),
     getPatientByDoctorId: asyncWrapper(async (req, res, next) => {
     const { userId } = req.params;
-    const patient = await patientModel.findOne({ doctor: userId }).populate('doctor');
+    const patient = await patientModel.find({ doctor: userId }).populate('doctor');
     console.log('Received userId:', userId);
 
     if (!patient) {
