@@ -23,7 +23,7 @@ const doctorController = {
   getDoctorByUserId: asyncWrapper(async (req, res, next) => {
   try {
     const { userId } = req.params;
-    const doctor = await doctorModel.findOne({ user: userId });
+    const doctor = await Doctor.findOne({ user: userId });
     if (!doctor) {
       return res.status(404).json({ message: "Doctor not found" });
     }
