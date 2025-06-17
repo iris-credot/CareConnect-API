@@ -1,3 +1,5 @@
+const mongoose = require("mongoose");
+
 const asyncWrapper = require('../Middleware/async');
 const patientModel = require('../Models/Patient');
 const userModel = require('../Models/User');
