@@ -20,6 +20,18 @@ const doctorController = {
     }
     res.status(200).json({ doctor });
   }),
+  getdoctor:asyncWrapper(async(req,res,next)=>{
+  try {
+    // req.user.id is the logged-in user's ID, you must get it from your auth middleware
+    const doctor = await Doctor.findOne({ user: req.user.id }).populate('user', 'firstName lastName');
+    if (!doctor) {
+      return res.status(404).json({ message: "Doctor not found" });
+    }
+    res.json({ doctor });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+  }),
   getDoctorByUserId: asyncWrapper(async (req, res, next) => {
   try {
     const { userId } = req.params;
