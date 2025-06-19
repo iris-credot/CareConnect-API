@@ -194,34 +194,31 @@ const userController ={
       });
      
   }),
-  ResetPassword: asyncWrapper(async (req, res, next) => {
-    const { email, newPassword, confirm } = req.body;
-    const { token } = req.params;
-    const user = await userModel.findOne({ email });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-  
-    const otpRecord = await otpModel.findOne({ user: user._id, token });
-    if (!otpRecord) {
-      return res.status(400).json({ message: 'Invalid or expired token' });
-    }
-  
-    if (otpRecord.expirationDate < new Date()) {
-      return res.status(400).json({ message: 'Token has expired' });
-    }
-  
-    if (newPassword !== confirm) {
-      return res.status(400).json({ message: 'Passwords do not match' });
-    }
-  
-    
-    user.password = newPassword;
-    await user.save();
-  
-    await otpModel.deleteOne({ _id: otpRecord._id });
-  
-    return res.status(200).json({ message: 'Password reset successfully' });
+ 
+ResetPassword: asyncWrapper(async (req, res, next) => {
+  const { email, newPassword, confirm } = req.body;
+  const { token } = req.params;
+
+  let payload;
+  try {
+    payload = jwt.verify(token, secret); // 👈 verify JWT token
+  } catch (error) {
+    return res.status(400).json({ message: 'Invalid or expired token' });
+  }
+
+  const user = await userModel.findOne({ _id: payload.userId, email });
+  if (!user) {
+    return res.status(404).json({ message: 'User not found or mismatched email' });
+  }
+
+  if (newPassword !== confirm) {
+    return res.status(400).json({ message: 'Passwords do not match' });
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  return res.status(200).json({ message: 'Password reset successfully' });
 })
 }
 module.exports = userController
