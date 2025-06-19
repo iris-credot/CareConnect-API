@@ -196,29 +196,29 @@ const userController ={
   }),
  
 ResetPassword: asyncWrapper(async (req, res, next) => {
-  const { email, newPassword, confirm } = req.body;
+    const { newPassword, confirm } = req.body;
   const { token } = req.params;
 
-  let payload;
+  let decoded;
   try {
-    payload = jwt.verify(token, secret); // 👈 verify JWT token
-  } catch (error) {
-    return res.status(400).json({ message: 'Invalid or expired token' });
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    return res.status(400).json({ message: "Invalid or expired token" });
   }
 
-  const user = await userModel.findOne({ _id: payload.userId, email });
+  const user = await userModel.findById(decoded.userId);
   if (!user) {
-    return res.status(404).json({ message: 'User not found or mismatched email' });
+    return res.status(404).json({ message: "User not found" });
   }
 
   if (newPassword !== confirm) {
-    return res.status(400).json({ message: 'Passwords do not match' });
+    return res.status(400).json({ message: "Passwords do not match" });
   }
 
   user.password = newPassword;
   await user.save();
 
-  return res.status(200).json({ message: 'Password reset successfully' });
+  return res.status(200).json({ message: "Password reset successfully" });
 })
 }
 module.exports = userController
