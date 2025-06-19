@@ -181,7 +181,7 @@ const userController ={
           expirationDate: new Date(Date.now() + 5 * 60 * 1000),
       });
   
-      const link = `https://careconnect-frontend-33ni.onrender.com/auth/reset?token=${token}&id=${foundUser.id}`;
+      const link = `https://careconnect-frontend-33ni.onrender.com/auth/reset/${token}/${foundUser.id}`;
       const emailBody = `Click on the link bellow to reset your password\n\n${link}`;
   
       await sendEmail(req.body.email, "Reset your password", emailBody);
