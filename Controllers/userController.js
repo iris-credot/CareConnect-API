@@ -201,7 +201,7 @@ ResetPassword: asyncWrapper(async (req, res, next) => {
 
   let decoded;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET);
+    decoded = jwt.verify(token, process.env.SECRET_KEY);
   } catch (err) {
     return res.status(400).json({ message: "Invalid or expired token" });
   }
